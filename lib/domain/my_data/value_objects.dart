@@ -188,8 +188,9 @@ class TelefonePrincipal extends ValueObject<String> {
   final Either<ValueFailure<String>, String> value;
 
   factory TelefonePrincipal(String input) {
-    return TelefonePrincipal._(validateMaxStringLength(input, maxLength)
-        .flatMap(validateStringNotEmpty));
+    return TelefonePrincipal._(
+      validateMaxStringLength(input, maxLength).flatMap(validateStringNotEmpty),
+    );
   }
 
   factory TelefonePrincipal.empty() {
@@ -258,14 +259,21 @@ class NumeroDeFilhos extends ValueObject<String> {
   const NumeroDeFilhos._(this.value);
 }
 
-class Conjuge extends ValueObject<String> {
+class Conjuge extends ValueObject<String?> {
   static const maxLength = 40;
 
   @override
-  final Either<ValueFailure<String>, String> value;
+  final Either<ValueFailure<String?>, String?> value;
 
-  factory Conjuge(String input) {
-    return Conjuge._(validateMaxStringLength(input, maxLength));
+  factory Conjuge(String? input) {
+    if (input == null) {
+      return Conjuge._(right(null));
+    } else {
+      return Conjuge._(
+        validateMaxStringLength(input, maxLength)
+            .flatMap(validateStringNotEmpty),
+      );
+    }
   }
 
   factory Conjuge.empty() {
@@ -290,15 +298,21 @@ class PortadorDeNecessidadesEspeciais extends ValueObject<bool> {
   const PortadorDeNecessidadesEspeciais._(this.value);
 }
 
-class NecessidadesEspeciais extends ValueObject<String> {
+class NecessidadesEspeciais extends ValueObject<String?> {
   static const maxLength = 40;
 
   @override
-  final Either<ValueFailure<String>, String> value;
+  final Either<ValueFailure<String?>, String?> value;
 
-  factory NecessidadesEspeciais(String input) {
-    return NecessidadesEspeciais._(validateMaxStringLength(input, maxLength)
-        .flatMap(validateStringNotEmpty));
+  factory NecessidadesEspeciais(String? input) {
+    if (input == null) {
+      return NecessidadesEspeciais._(right(null));
+    } else {
+      return NecessidadesEspeciais._(
+        validateMaxStringLength(input, maxLength)
+            .flatMap(validateStringNotEmpty),
+      );
+    }
   }
 
   factory NecessidadesEspeciais.empty() {
@@ -323,14 +337,21 @@ class TemParentesNaEmpresa extends ValueObject<bool> {
   const TemParentesNaEmpresa._(this.value);
 }
 
-class NomeDoParente extends ValueObject<String> {
+class NomeDoParente extends ValueObject<String?> {
   static const maxLength = 40;
 
   @override
-  final Either<ValueFailure<String>, String> value;
+  final Either<ValueFailure<String?>, String?> value;
 
-  factory NomeDoParente(String input) {
-    return NomeDoParente._(validateMaxStringLength(input, maxLength));
+  factory NomeDoParente(String? input) {
+    if (input == null) {
+      return NomeDoParente._(right(null));
+    } else {
+      return NomeDoParente._(
+        validateMaxStringLength(input, maxLength)
+            .flatMap(validateStringNotEmpty),
+      );
+    }
   }
 
   factory NomeDoParente.empty() {
@@ -340,14 +361,21 @@ class NomeDoParente extends ValueObject<String> {
   const NomeDoParente._(this.value);
 }
 
-class TipoDeParentesco extends ValueObject<String> {
+class TipoDeParentesco extends ValueObject<String?> {
   static const maxLength = 20;
 
   @override
-  final Either<ValueFailure<String>, String> value;
+  final Either<ValueFailure<String?>, String?> value;
 
-  factory TipoDeParentesco(String input) {
-    return TipoDeParentesco._(validateMaxStringLength(input, maxLength));
+  factory TipoDeParentesco(String? input) {
+    if (input == null) {
+      return TipoDeParentesco._(right(null));
+    } else {
+      return TipoDeParentesco._(
+        validateMaxStringLength(input, maxLength)
+            .flatMap(validateStringNotEmpty),
+      );
+    }
   }
 
   factory TipoDeParentesco.empty() {
@@ -372,15 +400,21 @@ class TemConhecidosNaEmpresa extends ValueObject<bool> {
   const TemConhecidosNaEmpresa._(this.value);
 }
 
-class NomesDasPessoasConhecidas extends ValueObject<String> {
+class NomesDasPessoasConhecidas extends ValueObject<String?> {
   static const maxLength = 40;
 
   @override
-  final Either<ValueFailure<String>, String> value;
+  final Either<ValueFailure<String?>, String?> value;
 
-  factory NomesDasPessoasConhecidas(String input) {
-    return NomesDasPessoasConhecidas._(
-        validateMaxStringLength(input, maxLength));
+  factory NomesDasPessoasConhecidas(String? input) {
+    if (input == null) {
+      return NomesDasPessoasConhecidas._(right(null));
+    } else {
+      return NomesDasPessoasConhecidas._(
+        validateMaxStringLength(input, maxLength)
+            .flatMap(validateStringNotEmpty),
+      );
+    }
   }
 
   factory NomesDasPessoasConhecidas.empty() {

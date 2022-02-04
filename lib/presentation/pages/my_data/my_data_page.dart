@@ -73,20 +73,31 @@ class MyDataForm extends HookConsumerWidget {
 
     final estadoCivil = useState(myData.estadoCivil);
     final conjuge = useState(myData.conjuge);
+    final conjugeController =
+        useTextEditingController(text: myData.conjuge.getOrNull() ?? '');
     final numeroDeFilhos = useState(myData.numeroDeFilhos);
 
     final portadorDeNecessidadesEspeciais =
         useState(myData.portadorDeNecessidadesEspeciais);
 
     final necessidadesEspeciais = useState(myData.necessidadesEspeciais);
+    final necessidadesEspeciaisController = useTextEditingController(
+        text: myData.necessidadesEspeciais.getOrNull() ?? '');
 
     final temParentesNaEmpresa = useState(myData.temParentesNaEmpresa);
     final nomeDoParente = useState(myData.nomeDoParente);
+    final nomeDoParenteController =
+        useTextEditingController(text: myData.nomeDoParente.getOrNull() ?? '');
     final tipoDeParentesco = useState(myData.tipoDeParentesco);
+    final tipoDeParentescoController = useTextEditingController(
+        text: myData.tipoDeParentesco.getOrNull() ?? '');
 
     final temConhecidosNaEmpresa = useState(myData.temConhecidosNaEmpresa);
     final nomesDasPessoasConhecidas =
         useState(myData.nomesDasPessoasConhecidas);
+    final nomesDasPessoasConhecidasController = useTextEditingController(
+        text: myData.nomesDasPessoasConhecidas.value
+            .fold((l) => '', (r) => r ?? ''));
 
     final autoDescricaoDaPersonalidade =
         useState(myData.autoDescricaoDaPersonalidade);
@@ -134,8 +145,53 @@ class MyDataForm extends HookConsumerWidget {
       estadoCivil.addListener(() {
         isCasado.value =
             estadoCivil.value.getOrCrash() == EstadoCivilEnum.casado;
+        if (!isCasado.value) {
+          conjuge.value = Conjuge(null);
+        } else {
+          conjuge.value = myData.conjuge;
+        }
       });
     }, [estadoCivil]);
+
+    useEffect(
+      () {
+        portadorDeNecessidadesEspeciais.addListener(() {
+          if (portadorDeNecessidadesEspeciais.value.getOrCrash() == true) {
+            necessidadesEspeciais.value = myData.necessidadesEspeciais;
+            necessidadesEspeciaisController.text =
+                necessidadesEspeciais.value.getOrNull() ?? '';
+          } else {
+            necessidadesEspeciais.value = NecessidadesEspeciais(null);
+            necessidadesEspeciaisController.text = '';
+          }
+        });
+        temParentesNaEmpresa.addListener(() {
+          if (temParentesNaEmpresa.value.getOrCrash() == true) {
+            tipoDeParentesco.value = myData.tipoDeParentesco;
+            tipoDeParentescoController.text =
+                tipoDeParentesco.value.getOrNull() ?? '';
+            nomeDoParente.value = myData.nomeDoParente;
+            nomeDoParenteController.text =
+                nomeDoParente.value.getOrNull() ?? '';
+          } else {
+            tipoDeParentesco.value = TipoDeParentesco(null);
+            tipoDeParentescoController.text = '';
+            nomeDoParente.value = NomeDoParente(null);
+            nomeDoParenteController.text = '';
+          }
+        });
+        temConhecidosNaEmpresa.addListener(() {
+          if (temConhecidosNaEmpresa.value.getOrCrash() == true) {
+            nomesDasPessoasConhecidas.value = myData.nomesDasPessoasConhecidas;
+            nomesDasPessoasConhecidasController.text =
+                nomesDasPessoasConhecidas.value.getOrNull() ?? '';
+          } else {
+            nomesDasPessoasConhecidas.value = NomesDasPessoasConhecidas(null);
+            nomesDasPessoasConhecidasController.text = '';
+          }
+        });
+      },
+    );
 
     return LayoutBuilder(builder: (context, constraints) {
       return Padding(
@@ -388,7 +444,7 @@ class MyDataForm extends HookConsumerWidget {
                   onChanged: (value) => estadoCivil.value = EstadoCivil(value),
                 ),
                 TextFormField(
-                  initialValue: _initialValue(conjuge),
+                  controller: conjugeController,
                   maxLength: Conjuge.maxLength,
                   decoration: InputDecoration(
                       label: Text(labelForConjuge.value),
@@ -422,7 +478,7 @@ class MyDataForm extends HookConsumerWidget {
                       PortadorDeNecessidadesEspeciais(value),
                 ),
                 TextFormField(
-                  initialValue: _initialValue(necessidadesEspeciais),
+                  controller: necessidadesEspeciaisController,
                   maxLength: NecessidadesEspeciais.maxLength,
                   decoration: InputDecoration(
                     label: const Text('Necessidades Especiais'),
@@ -446,7 +502,7 @@ class MyDataForm extends HookConsumerWidget {
                       temParentesNaEmpresa.value = TemParentesNaEmpresa(value),
                 ),
                 TextFormField(
-                  initialValue: _initialValue(nomeDoParente),
+                  controller: nomeDoParenteController,
                   maxLength: NomeDoParente.maxLength,
                   decoration: InputDecoration(
                     label: const Text('Nome do parente ou namorada(o)'),
@@ -461,7 +517,7 @@ class MyDataForm extends HookConsumerWidget {
                   validator: (_) => _validateField(nomeDoParente),
                 ),
                 TextFormField(
-                  initialValue: _initialValue(tipoDeParentesco),
+                  controller: tipoDeParentescoController,
                   maxLength: TipoDeParentesco.maxLength,
                   decoration: InputDecoration(
                     label: const Text('Tipo de parentesco'),
@@ -486,7 +542,7 @@ class MyDataForm extends HookConsumerWidget {
                       TemConhecidosNaEmpresa(value),
                 ),
                 TextFormField(
-                  initialValue: _initialValue(nomesDasPessoasConhecidas),
+                  controller: nomesDasPessoasConhecidasController,
                   maxLength: NomesDasPessoasConhecidas.maxLength,
                   decoration: InputDecoration(
                     label: const Text('Nome das pessoas conhecidas'),
@@ -645,12 +701,15 @@ class MyDataForm extends HookConsumerWidget {
     });
   }
 
-  String? _initialValue<T extends ValueObject>(
-      ValueNotifier<T?> valueNotifier) {
-    // if (valueNotifier.value == null) {
-    //   return '';
-    // }
-    return valueNotifier.value?.getOrNull();
+  String _initialValue<T extends ValueObject>(ValueNotifier<T> valueNotifier) {
+    final valueObject = valueNotifier.value;
+    return valueObject.value.fold(
+      (failure) => failure.maybeWhen(
+        empty: (_) => '',
+        orElse: () => failure.failedValue,
+      ),
+      (value) => value ?? '',
+    );
   }
 
   Icon? _feedbackIconForOption<T extends ValueObject<Option>>(
