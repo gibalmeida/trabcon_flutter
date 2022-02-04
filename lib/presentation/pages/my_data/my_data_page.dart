@@ -147,8 +147,10 @@ class MyDataForm extends HookConsumerWidget {
             estadoCivil.value.getOrCrash() == EstadoCivilEnum.casado;
         if (!isCasado.value) {
           conjuge.value = Conjuge(null);
+          conjugeController.text = '';
         } else {
           conjuge.value = myData.conjuge;
+          conjugeController.text = conjuge.value.getOrNull() ?? '';
         }
       });
     }, [estadoCivil]);
@@ -796,7 +798,4 @@ class MyDataForm extends HookConsumerWidget {
     );
     return pickedDate;
   }
-  // TODO: verificar campos flag (ex: possui necessidades especiais) e validar o
-// campo correspondente se não está em branco (ex: necessidades especiais).
-// Outros campos (conjuge, nome do parente, tipo de parentesco, nome dos amigos)
 }
