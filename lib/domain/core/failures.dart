@@ -47,4 +47,7 @@ class ValueFailure<T> with _$ValueFailure<T> {
     required T failedValue,
     required String invalidDate,
   }) = InvalidDate<T>;
+  const factory ValueFailure.optionNotSelected({
+    required T failedValue,
+  }) = OptionNotSelected<T>;
 }

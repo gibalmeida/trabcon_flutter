@@ -99,6 +99,12 @@ class _$ValueFailureTearOff {
       invalidDate: invalidDate,
     );
   }
+
+  OptionNotSelected<T> optionNotSelected<T>({required T failedValue}) {
+    return OptionNotSelected<T>(
+      failedValue: failedValue,
+    );
+  }
 }
 
 /// @nodoc
@@ -122,6 +128,7 @@ mixin _$ValueFailure<T> {
     required TResult Function(T failedValue, int min, int max) outOfRange,
     required TResult Function(T failedValue) invalidCep,
     required TResult Function(T failedValue, String invalidDate) invalidDate,
+    required TResult Function(T failedValue) optionNotSelected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -138,6 +145,7 @@ mixin _$ValueFailure<T> {
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -154,6 +162,7 @@ mixin _$ValueFailure<T> {
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -171,6 +180,7 @@ mixin _$ValueFailure<T> {
     required TResult Function(OutOfRange<T> value) outOfRange,
     required TResult Function(InvalidCep<T> value) invalidCep,
     required TResult Function(InvalidDate<T> value) invalidDate,
+    required TResult Function(OptionNotSelected<T> value) optionNotSelected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -187,6 +197,7 @@ mixin _$ValueFailure<T> {
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -203,6 +214,7 @@ mixin _$ValueFailure<T> {
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -343,6 +355,7 @@ class _$ExceedingLength<T>
     required TResult Function(T failedValue, int min, int max) outOfRange,
     required TResult Function(T failedValue) invalidCep,
     required TResult Function(T failedValue, String invalidDate) invalidDate,
+    required TResult Function(T failedValue) optionNotSelected,
   }) {
     return exceedingLength(failedValue, max);
   }
@@ -362,6 +375,7 @@ class _$ExceedingLength<T>
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
   }) {
     return exceedingLength?.call(failedValue, max);
   }
@@ -381,6 +395,7 @@ class _$ExceedingLength<T>
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
     required TResult orElse(),
   }) {
     if (exceedingLength != null) {
@@ -404,6 +419,7 @@ class _$ExceedingLength<T>
     required TResult Function(OutOfRange<T> value) outOfRange,
     required TResult Function(InvalidCep<T> value) invalidCep,
     required TResult Function(InvalidDate<T> value) invalidDate,
+    required TResult Function(OptionNotSelected<T> value) optionNotSelected,
   }) {
     return exceedingLength(this);
   }
@@ -423,6 +439,7 @@ class _$ExceedingLength<T>
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
   }) {
     return exceedingLength?.call(this);
   }
@@ -442,6 +459,7 @@ class _$ExceedingLength<T>
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
     required TResult orElse(),
   }) {
     if (exceedingLength != null) {
@@ -549,6 +567,7 @@ class _$Empty<T> with DiagnosticableTreeMixin implements Empty<T> {
     required TResult Function(T failedValue, int min, int max) outOfRange,
     required TResult Function(T failedValue) invalidCep,
     required TResult Function(T failedValue, String invalidDate) invalidDate,
+    required TResult Function(T failedValue) optionNotSelected,
   }) {
     return empty(failedValue);
   }
@@ -568,6 +587,7 @@ class _$Empty<T> with DiagnosticableTreeMixin implements Empty<T> {
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
   }) {
     return empty?.call(failedValue);
   }
@@ -587,6 +607,7 @@ class _$Empty<T> with DiagnosticableTreeMixin implements Empty<T> {
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
     required TResult orElse(),
   }) {
     if (empty != null) {
@@ -610,6 +631,7 @@ class _$Empty<T> with DiagnosticableTreeMixin implements Empty<T> {
     required TResult Function(OutOfRange<T> value) outOfRange,
     required TResult Function(InvalidCep<T> value) invalidCep,
     required TResult Function(InvalidDate<T> value) invalidDate,
+    required TResult Function(OptionNotSelected<T> value) optionNotSelected,
   }) {
     return empty(this);
   }
@@ -629,6 +651,7 @@ class _$Empty<T> with DiagnosticableTreeMixin implements Empty<T> {
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
   }) {
     return empty?.call(this);
   }
@@ -648,6 +671,7 @@ class _$Empty<T> with DiagnosticableTreeMixin implements Empty<T> {
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
     required TResult orElse(),
   }) {
     if (empty != null) {
@@ -756,6 +780,7 @@ class _$Multiline<T> with DiagnosticableTreeMixin implements Multiline<T> {
     required TResult Function(T failedValue, int min, int max) outOfRange,
     required TResult Function(T failedValue) invalidCep,
     required TResult Function(T failedValue, String invalidDate) invalidDate,
+    required TResult Function(T failedValue) optionNotSelected,
   }) {
     return multiline(failedValue);
   }
@@ -775,6 +800,7 @@ class _$Multiline<T> with DiagnosticableTreeMixin implements Multiline<T> {
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
   }) {
     return multiline?.call(failedValue);
   }
@@ -794,6 +820,7 @@ class _$Multiline<T> with DiagnosticableTreeMixin implements Multiline<T> {
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
     required TResult orElse(),
   }) {
     if (multiline != null) {
@@ -817,6 +844,7 @@ class _$Multiline<T> with DiagnosticableTreeMixin implements Multiline<T> {
     required TResult Function(OutOfRange<T> value) outOfRange,
     required TResult Function(InvalidCep<T> value) invalidCep,
     required TResult Function(InvalidDate<T> value) invalidDate,
+    required TResult Function(OptionNotSelected<T> value) optionNotSelected,
   }) {
     return multiline(this);
   }
@@ -836,6 +864,7 @@ class _$Multiline<T> with DiagnosticableTreeMixin implements Multiline<T> {
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
   }) {
     return multiline?.call(this);
   }
@@ -855,6 +884,7 @@ class _$Multiline<T> with DiagnosticableTreeMixin implements Multiline<T> {
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
     required TResult orElse(),
   }) {
     if (multiline != null) {
@@ -976,6 +1006,7 @@ class _$NumberTooLarge<T>
     required TResult Function(T failedValue, int min, int max) outOfRange,
     required TResult Function(T failedValue) invalidCep,
     required TResult Function(T failedValue, String invalidDate) invalidDate,
+    required TResult Function(T failedValue) optionNotSelected,
   }) {
     return numberTooLarge(failedValue, max);
   }
@@ -995,6 +1026,7 @@ class _$NumberTooLarge<T>
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
   }) {
     return numberTooLarge?.call(failedValue, max);
   }
@@ -1014,6 +1046,7 @@ class _$NumberTooLarge<T>
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
     required TResult orElse(),
   }) {
     if (numberTooLarge != null) {
@@ -1037,6 +1070,7 @@ class _$NumberTooLarge<T>
     required TResult Function(OutOfRange<T> value) outOfRange,
     required TResult Function(InvalidCep<T> value) invalidCep,
     required TResult Function(InvalidDate<T> value) invalidDate,
+    required TResult Function(OptionNotSelected<T> value) optionNotSelected,
   }) {
     return numberTooLarge(this);
   }
@@ -1056,6 +1090,7 @@ class _$NumberTooLarge<T>
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
   }) {
     return numberTooLarge?.call(this);
   }
@@ -1075,6 +1110,7 @@ class _$NumberTooLarge<T>
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
     required TResult orElse(),
   }) {
     if (numberTooLarge != null) {
@@ -1196,6 +1232,7 @@ class _$ListTooLong<T> with DiagnosticableTreeMixin implements ListTooLong<T> {
     required TResult Function(T failedValue, int min, int max) outOfRange,
     required TResult Function(T failedValue) invalidCep,
     required TResult Function(T failedValue, String invalidDate) invalidDate,
+    required TResult Function(T failedValue) optionNotSelected,
   }) {
     return listTooLong(failedValue, max);
   }
@@ -1215,6 +1252,7 @@ class _$ListTooLong<T> with DiagnosticableTreeMixin implements ListTooLong<T> {
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
   }) {
     return listTooLong?.call(failedValue, max);
   }
@@ -1234,6 +1272,7 @@ class _$ListTooLong<T> with DiagnosticableTreeMixin implements ListTooLong<T> {
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
     required TResult orElse(),
   }) {
     if (listTooLong != null) {
@@ -1257,6 +1296,7 @@ class _$ListTooLong<T> with DiagnosticableTreeMixin implements ListTooLong<T> {
     required TResult Function(OutOfRange<T> value) outOfRange,
     required TResult Function(InvalidCep<T> value) invalidCep,
     required TResult Function(InvalidDate<T> value) invalidDate,
+    required TResult Function(OptionNotSelected<T> value) optionNotSelected,
   }) {
     return listTooLong(this);
   }
@@ -1276,6 +1316,7 @@ class _$ListTooLong<T> with DiagnosticableTreeMixin implements ListTooLong<T> {
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
   }) {
     return listTooLong?.call(this);
   }
@@ -1295,6 +1336,7 @@ class _$ListTooLong<T> with DiagnosticableTreeMixin implements ListTooLong<T> {
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
     required TResult orElse(),
   }) {
     if (listTooLong != null) {
@@ -1407,6 +1449,7 @@ class _$InvalidEmail<T>
     required TResult Function(T failedValue, int min, int max) outOfRange,
     required TResult Function(T failedValue) invalidCep,
     required TResult Function(T failedValue, String invalidDate) invalidDate,
+    required TResult Function(T failedValue) optionNotSelected,
   }) {
     return invalidEmail(failedValue);
   }
@@ -1426,6 +1469,7 @@ class _$InvalidEmail<T>
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
   }) {
     return invalidEmail?.call(failedValue);
   }
@@ -1445,6 +1489,7 @@ class _$InvalidEmail<T>
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
     required TResult orElse(),
   }) {
     if (invalidEmail != null) {
@@ -1468,6 +1513,7 @@ class _$InvalidEmail<T>
     required TResult Function(OutOfRange<T> value) outOfRange,
     required TResult Function(InvalidCep<T> value) invalidCep,
     required TResult Function(InvalidDate<T> value) invalidDate,
+    required TResult Function(OptionNotSelected<T> value) optionNotSelected,
   }) {
     return invalidEmail(this);
   }
@@ -1487,6 +1533,7 @@ class _$InvalidEmail<T>
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
   }) {
     return invalidEmail?.call(this);
   }
@@ -1506,6 +1553,7 @@ class _$InvalidEmail<T>
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
     required TResult orElse(),
   }) {
     if (invalidEmail != null) {
@@ -1616,6 +1664,7 @@ class _$ShortPassword<T>
     required TResult Function(T failedValue, int min, int max) outOfRange,
     required TResult Function(T failedValue) invalidCep,
     required TResult Function(T failedValue, String invalidDate) invalidDate,
+    required TResult Function(T failedValue) optionNotSelected,
   }) {
     return shortPassword(failedValue);
   }
@@ -1635,6 +1684,7 @@ class _$ShortPassword<T>
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
   }) {
     return shortPassword?.call(failedValue);
   }
@@ -1654,6 +1704,7 @@ class _$ShortPassword<T>
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
     required TResult orElse(),
   }) {
     if (shortPassword != null) {
@@ -1677,6 +1728,7 @@ class _$ShortPassword<T>
     required TResult Function(OutOfRange<T> value) outOfRange,
     required TResult Function(InvalidCep<T> value) invalidCep,
     required TResult Function(InvalidDate<T> value) invalidDate,
+    required TResult Function(OptionNotSelected<T> value) optionNotSelected,
   }) {
     return shortPassword(this);
   }
@@ -1696,6 +1748,7 @@ class _$ShortPassword<T>
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
   }) {
     return shortPassword?.call(this);
   }
@@ -1715,6 +1768,7 @@ class _$ShortPassword<T>
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
     required TResult orElse(),
   }) {
     if (shortPassword != null) {
@@ -1825,6 +1879,7 @@ class _$InvalidPhotoUrl<T>
     required TResult Function(T failedValue, int min, int max) outOfRange,
     required TResult Function(T failedValue) invalidCep,
     required TResult Function(T failedValue, String invalidDate) invalidDate,
+    required TResult Function(T failedValue) optionNotSelected,
   }) {
     return invalidPhotoUrl(failedValue);
   }
@@ -1844,6 +1899,7 @@ class _$InvalidPhotoUrl<T>
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
   }) {
     return invalidPhotoUrl?.call(failedValue);
   }
@@ -1863,6 +1919,7 @@ class _$InvalidPhotoUrl<T>
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
     required TResult orElse(),
   }) {
     if (invalidPhotoUrl != null) {
@@ -1886,6 +1943,7 @@ class _$InvalidPhotoUrl<T>
     required TResult Function(OutOfRange<T> value) outOfRange,
     required TResult Function(InvalidCep<T> value) invalidCep,
     required TResult Function(InvalidDate<T> value) invalidDate,
+    required TResult Function(OptionNotSelected<T> value) optionNotSelected,
   }) {
     return invalidPhotoUrl(this);
   }
@@ -1905,6 +1963,7 @@ class _$InvalidPhotoUrl<T>
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
   }) {
     return invalidPhotoUrl?.call(this);
   }
@@ -1924,6 +1983,7 @@ class _$InvalidPhotoUrl<T>
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
     required TResult orElse(),
   }) {
     if (invalidPhotoUrl != null) {
@@ -2033,6 +2093,7 @@ class _$NotAInteger<T> with DiagnosticableTreeMixin implements NotAInteger<T> {
     required TResult Function(T failedValue, int min, int max) outOfRange,
     required TResult Function(T failedValue) invalidCep,
     required TResult Function(T failedValue, String invalidDate) invalidDate,
+    required TResult Function(T failedValue) optionNotSelected,
   }) {
     return notAInteger(failedValue);
   }
@@ -2052,6 +2113,7 @@ class _$NotAInteger<T> with DiagnosticableTreeMixin implements NotAInteger<T> {
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
   }) {
     return notAInteger?.call(failedValue);
   }
@@ -2071,6 +2133,7 @@ class _$NotAInteger<T> with DiagnosticableTreeMixin implements NotAInteger<T> {
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
     required TResult orElse(),
   }) {
     if (notAInteger != null) {
@@ -2094,6 +2157,7 @@ class _$NotAInteger<T> with DiagnosticableTreeMixin implements NotAInteger<T> {
     required TResult Function(OutOfRange<T> value) outOfRange,
     required TResult Function(InvalidCep<T> value) invalidCep,
     required TResult Function(InvalidDate<T> value) invalidDate,
+    required TResult Function(OptionNotSelected<T> value) optionNotSelected,
   }) {
     return notAInteger(this);
   }
@@ -2113,6 +2177,7 @@ class _$NotAInteger<T> with DiagnosticableTreeMixin implements NotAInteger<T> {
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
   }) {
     return notAInteger?.call(this);
   }
@@ -2132,6 +2197,7 @@ class _$NotAInteger<T> with DiagnosticableTreeMixin implements NotAInteger<T> {
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
     required TResult orElse(),
   }) {
     if (notAInteger != null) {
@@ -2262,6 +2328,7 @@ class _$OutOfRange<T> with DiagnosticableTreeMixin implements OutOfRange<T> {
     required TResult Function(T failedValue, int min, int max) outOfRange,
     required TResult Function(T failedValue) invalidCep,
     required TResult Function(T failedValue, String invalidDate) invalidDate,
+    required TResult Function(T failedValue) optionNotSelected,
   }) {
     return outOfRange(failedValue, min, max);
   }
@@ -2281,6 +2348,7 @@ class _$OutOfRange<T> with DiagnosticableTreeMixin implements OutOfRange<T> {
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
   }) {
     return outOfRange?.call(failedValue, min, max);
   }
@@ -2300,6 +2368,7 @@ class _$OutOfRange<T> with DiagnosticableTreeMixin implements OutOfRange<T> {
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
     required TResult orElse(),
   }) {
     if (outOfRange != null) {
@@ -2323,6 +2392,7 @@ class _$OutOfRange<T> with DiagnosticableTreeMixin implements OutOfRange<T> {
     required TResult Function(OutOfRange<T> value) outOfRange,
     required TResult Function(InvalidCep<T> value) invalidCep,
     required TResult Function(InvalidDate<T> value) invalidDate,
+    required TResult Function(OptionNotSelected<T> value) optionNotSelected,
   }) {
     return outOfRange(this);
   }
@@ -2342,6 +2412,7 @@ class _$OutOfRange<T> with DiagnosticableTreeMixin implements OutOfRange<T> {
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
   }) {
     return outOfRange?.call(this);
   }
@@ -2361,6 +2432,7 @@ class _$OutOfRange<T> with DiagnosticableTreeMixin implements OutOfRange<T> {
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
     required TResult orElse(),
   }) {
     if (outOfRange != null) {
@@ -2474,6 +2546,7 @@ class _$InvalidCep<T> with DiagnosticableTreeMixin implements InvalidCep<T> {
     required TResult Function(T failedValue, int min, int max) outOfRange,
     required TResult Function(T failedValue) invalidCep,
     required TResult Function(T failedValue, String invalidDate) invalidDate,
+    required TResult Function(T failedValue) optionNotSelected,
   }) {
     return invalidCep(failedValue);
   }
@@ -2493,6 +2566,7 @@ class _$InvalidCep<T> with DiagnosticableTreeMixin implements InvalidCep<T> {
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
   }) {
     return invalidCep?.call(failedValue);
   }
@@ -2512,6 +2586,7 @@ class _$InvalidCep<T> with DiagnosticableTreeMixin implements InvalidCep<T> {
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
     required TResult orElse(),
   }) {
     if (invalidCep != null) {
@@ -2535,6 +2610,7 @@ class _$InvalidCep<T> with DiagnosticableTreeMixin implements InvalidCep<T> {
     required TResult Function(OutOfRange<T> value) outOfRange,
     required TResult Function(InvalidCep<T> value) invalidCep,
     required TResult Function(InvalidDate<T> value) invalidDate,
+    required TResult Function(OptionNotSelected<T> value) optionNotSelected,
   }) {
     return invalidCep(this);
   }
@@ -2554,6 +2630,7 @@ class _$InvalidCep<T> with DiagnosticableTreeMixin implements InvalidCep<T> {
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
   }) {
     return invalidCep?.call(this);
   }
@@ -2573,6 +2650,7 @@ class _$InvalidCep<T> with DiagnosticableTreeMixin implements InvalidCep<T> {
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
     required TResult orElse(),
   }) {
     if (invalidCep != null) {
@@ -2693,6 +2771,7 @@ class _$InvalidDate<T> with DiagnosticableTreeMixin implements InvalidDate<T> {
     required TResult Function(T failedValue, int min, int max) outOfRange,
     required TResult Function(T failedValue) invalidCep,
     required TResult Function(T failedValue, String invalidDate) invalidDate,
+    required TResult Function(T failedValue) optionNotSelected,
   }) {
     return invalidDate(failedValue, this.invalidDate);
   }
@@ -2712,6 +2791,7 @@ class _$InvalidDate<T> with DiagnosticableTreeMixin implements InvalidDate<T> {
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
   }) {
     return invalidDate?.call(failedValue, this.invalidDate);
   }
@@ -2731,6 +2811,7 @@ class _$InvalidDate<T> with DiagnosticableTreeMixin implements InvalidDate<T> {
     TResult Function(T failedValue, int min, int max)? outOfRange,
     TResult Function(T failedValue)? invalidCep,
     TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
     required TResult orElse(),
   }) {
     if (invalidDate != null) {
@@ -2754,6 +2835,7 @@ class _$InvalidDate<T> with DiagnosticableTreeMixin implements InvalidDate<T> {
     required TResult Function(OutOfRange<T> value) outOfRange,
     required TResult Function(InvalidCep<T> value) invalidCep,
     required TResult Function(InvalidDate<T> value) invalidDate,
+    required TResult Function(OptionNotSelected<T> value) optionNotSelected,
   }) {
     return invalidDate(this);
   }
@@ -2773,6 +2855,7 @@ class _$InvalidDate<T> with DiagnosticableTreeMixin implements InvalidDate<T> {
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
   }) {
     return invalidDate?.call(this);
   }
@@ -2792,6 +2875,7 @@ class _$InvalidDate<T> with DiagnosticableTreeMixin implements InvalidDate<T> {
     TResult Function(OutOfRange<T> value)? outOfRange,
     TResult Function(InvalidCep<T> value)? invalidCep,
     TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
     required TResult orElse(),
   }) {
     if (invalidDate != null) {
@@ -2811,5 +2895,222 @@ abstract class InvalidDate<T> implements ValueFailure<T> {
   @override
   @JsonKey(ignore: true)
   $InvalidDateCopyWith<T, InvalidDate<T>> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $OptionNotSelectedCopyWith<T, $Res>
+    implements $ValueFailureCopyWith<T, $Res> {
+  factory $OptionNotSelectedCopyWith(OptionNotSelected<T> value,
+          $Res Function(OptionNotSelected<T>) then) =
+      _$OptionNotSelectedCopyWithImpl<T, $Res>;
+  @override
+  $Res call({T failedValue});
+}
+
+/// @nodoc
+class _$OptionNotSelectedCopyWithImpl<T, $Res>
+    extends _$ValueFailureCopyWithImpl<T, $Res>
+    implements $OptionNotSelectedCopyWith<T, $Res> {
+  _$OptionNotSelectedCopyWithImpl(
+      OptionNotSelected<T> _value, $Res Function(OptionNotSelected<T>) _then)
+      : super(_value, (v) => _then(v as OptionNotSelected<T>));
+
+  @override
+  OptionNotSelected<T> get _value => super._value as OptionNotSelected<T>;
+
+  @override
+  $Res call({
+    Object? failedValue = freezed,
+  }) {
+    return _then(OptionNotSelected<T>(
+      failedValue: failedValue == freezed
+          ? _value.failedValue
+          : failedValue // ignore: cast_nullable_to_non_nullable
+              as T,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OptionNotSelected<T>
+    with DiagnosticableTreeMixin
+    implements OptionNotSelected<T> {
+  const _$OptionNotSelected({required this.failedValue});
+
+  @override
+  final T failedValue;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ValueFailure<$T>.optionNotSelected(failedValue: $failedValue)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ValueFailure<$T>.optionNotSelected'))
+      ..add(DiagnosticsProperty('failedValue', failedValue));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is OptionNotSelected<T> &&
+            const DeepCollectionEquality()
+                .equals(other.failedValue, failedValue));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(failedValue));
+
+  @JsonKey(ignore: true)
+  @override
+  $OptionNotSelectedCopyWith<T, OptionNotSelected<T>> get copyWith =>
+      _$OptionNotSelectedCopyWithImpl<T, OptionNotSelected<T>>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(T failedValue, int max) exceedingLength,
+    required TResult Function(T failedValue) empty,
+    required TResult Function(T failedValue) multiline,
+    required TResult Function(T failedValue, num max) numberTooLarge,
+    required TResult Function(T failedValue, int max) listTooLong,
+    required TResult Function(T failedValue) invalidEmail,
+    required TResult Function(T failedValue) shortPassword,
+    required TResult Function(T failedValue) invalidPhotoUrl,
+    required TResult Function(T failedValue) notAInteger,
+    required TResult Function(T failedValue, int min, int max) outOfRange,
+    required TResult Function(T failedValue) invalidCep,
+    required TResult Function(T failedValue, String invalidDate) invalidDate,
+    required TResult Function(T failedValue) optionNotSelected,
+  }) {
+    return optionNotSelected(failedValue);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(T failedValue, int max)? exceedingLength,
+    TResult Function(T failedValue)? empty,
+    TResult Function(T failedValue)? multiline,
+    TResult Function(T failedValue, num max)? numberTooLarge,
+    TResult Function(T failedValue, int max)? listTooLong,
+    TResult Function(T failedValue)? invalidEmail,
+    TResult Function(T failedValue)? shortPassword,
+    TResult Function(T failedValue)? invalidPhotoUrl,
+    TResult Function(T failedValue)? notAInteger,
+    TResult Function(T failedValue, int min, int max)? outOfRange,
+    TResult Function(T failedValue)? invalidCep,
+    TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
+  }) {
+    return optionNotSelected?.call(failedValue);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(T failedValue, int max)? exceedingLength,
+    TResult Function(T failedValue)? empty,
+    TResult Function(T failedValue)? multiline,
+    TResult Function(T failedValue, num max)? numberTooLarge,
+    TResult Function(T failedValue, int max)? listTooLong,
+    TResult Function(T failedValue)? invalidEmail,
+    TResult Function(T failedValue)? shortPassword,
+    TResult Function(T failedValue)? invalidPhotoUrl,
+    TResult Function(T failedValue)? notAInteger,
+    TResult Function(T failedValue, int min, int max)? outOfRange,
+    TResult Function(T failedValue)? invalidCep,
+    TResult Function(T failedValue, String invalidDate)? invalidDate,
+    TResult Function(T failedValue)? optionNotSelected,
+    required TResult orElse(),
+  }) {
+    if (optionNotSelected != null) {
+      return optionNotSelected(failedValue);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ExceedingLength<T> value) exceedingLength,
+    required TResult Function(Empty<T> value) empty,
+    required TResult Function(Multiline<T> value) multiline,
+    required TResult Function(NumberTooLarge<T> value) numberTooLarge,
+    required TResult Function(ListTooLong<T> value) listTooLong,
+    required TResult Function(InvalidEmail<T> value) invalidEmail,
+    required TResult Function(ShortPassword<T> value) shortPassword,
+    required TResult Function(InvalidPhotoUrl<T> value) invalidPhotoUrl,
+    required TResult Function(NotAInteger<T> value) notAInteger,
+    required TResult Function(OutOfRange<T> value) outOfRange,
+    required TResult Function(InvalidCep<T> value) invalidCep,
+    required TResult Function(InvalidDate<T> value) invalidDate,
+    required TResult Function(OptionNotSelected<T> value) optionNotSelected,
+  }) {
+    return optionNotSelected(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(ExceedingLength<T> value)? exceedingLength,
+    TResult Function(Empty<T> value)? empty,
+    TResult Function(Multiline<T> value)? multiline,
+    TResult Function(NumberTooLarge<T> value)? numberTooLarge,
+    TResult Function(ListTooLong<T> value)? listTooLong,
+    TResult Function(InvalidEmail<T> value)? invalidEmail,
+    TResult Function(ShortPassword<T> value)? shortPassword,
+    TResult Function(InvalidPhotoUrl<T> value)? invalidPhotoUrl,
+    TResult Function(NotAInteger<T> value)? notAInteger,
+    TResult Function(OutOfRange<T> value)? outOfRange,
+    TResult Function(InvalidCep<T> value)? invalidCep,
+    TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
+  }) {
+    return optionNotSelected?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ExceedingLength<T> value)? exceedingLength,
+    TResult Function(Empty<T> value)? empty,
+    TResult Function(Multiline<T> value)? multiline,
+    TResult Function(NumberTooLarge<T> value)? numberTooLarge,
+    TResult Function(ListTooLong<T> value)? listTooLong,
+    TResult Function(InvalidEmail<T> value)? invalidEmail,
+    TResult Function(ShortPassword<T> value)? shortPassword,
+    TResult Function(InvalidPhotoUrl<T> value)? invalidPhotoUrl,
+    TResult Function(NotAInteger<T> value)? notAInteger,
+    TResult Function(OutOfRange<T> value)? outOfRange,
+    TResult Function(InvalidCep<T> value)? invalidCep,
+    TResult Function(InvalidDate<T> value)? invalidDate,
+    TResult Function(OptionNotSelected<T> value)? optionNotSelected,
+    required TResult orElse(),
+  }) {
+    if (optionNotSelected != null) {
+      return optionNotSelected(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OptionNotSelected<T> implements ValueFailure<T> {
+  const factory OptionNotSelected({required T failedValue}) =
+      _$OptionNotSelected<T>;
+
+  @override
+  T get failedValue;
+  @override
+  @JsonKey(ignore: true)
+  $OptionNotSelectedCopyWith<T, OptionNotSelected<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }

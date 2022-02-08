@@ -1,7 +1,13 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 enum EstadoCivilEnum {
+  @JsonValue("Solteiro")
   solteiro,
+  @JsonValue("Casado")
   casado,
+  @JsonValue("Separado")
   separado,
+  @JsonValue("Divorciado")
   divorciado,
 }
 
@@ -13,7 +19,9 @@ extension EstadoCivilEnumX on EstadoCivilEnum {
 }
 
 enum GeneroEnum {
+  @JsonValue("Masculino")
   masculino,
+  @JsonValue("Feminino")
   feminino,
 }
 
@@ -25,10 +33,15 @@ extension GeneroEnumX on GeneroEnum {
 }
 
 enum VeiculoAutomotorProprioEnum {
+  @JsonValue("Não possui")
   naoPossuoVeiculoAutomotor,
+  @JsonValue("Carro")
   simCarro,
+  @JsonValue("Moto")
   simMoto,
+  @JsonValue("Carro e Moto")
   simCarroEMoto,
+  @JsonValue("Outro")
   simOutro,
 }
 
@@ -65,32 +78,59 @@ extension VeiculoAutomotorProprioEnumX on VeiculoAutomotorProprioEnum {
 }
 
 enum UnidadeFederativaDoBrasilEnum {
+  @JsonValue("AC")
   acre,
+  @JsonValue("AL")
   alagoas,
+  @JsonValue("AP")
   amapa,
+  @JsonValue("AM")
   amazonas,
+  @JsonValue("BA")
   bahia,
+  @JsonValue("CE")
   ceara,
+  @JsonValue("DF")
   distritoFederal,
+  @JsonValue("ES")
   espiritoSanto,
+  @JsonValue("GO")
   goias,
+  @JsonValue("MA")
   maranhao,
+  @JsonValue("MT")
   matoGrosso,
+  @JsonValue("MS")
   matoGrossoDoSul,
+  @JsonValue("MG")
   minasGerais,
+  @JsonValue("PA")
   para,
+  @JsonValue("PB")
   paraiba,
+  @JsonValue("PR")
   parana,
+  @JsonValue("PE")
   pernambuco,
+  @JsonValue("PI")
   piaui,
+  @JsonValue("RJ")
   rioDeJaneiro,
+  @JsonValue("RN")
   rioGrandeDoNorte,
+  @JsonValue("RS")
   rioGrandeDoSul,
+  @JsonValue("RO")
   rondonia,
+  @JsonValue("RR")
   roraima,
+  @JsonValue("SC")
   santaCatarina,
+  @JsonValue("SP")
   saoPaulo,
+  @JsonValue("SE")
   sergipe,
+  @JsonValue("TO")
   tocantins,
 }
 

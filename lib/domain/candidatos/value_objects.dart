@@ -22,52 +22,68 @@ class NomeCompleto extends ValueObject<String> {
   const NomeCompleto._(this.value);
 }
 
-class DataDeNascimento extends ValueObject<Option<DateTime>> {
+class DataDeNascimento extends ValueObject<DateTime> {
   @override
-  final Either<ValueFailure<Option<DateTime>>, Option<DateTime>> value;
+  final Either<ValueFailure<DateTime?>, DateTime> value;
 
-  factory DataDeNascimento(Option<DateTime> input) {
+  factory DataDeNascimento(DateTime input) {
     return DataDeNascimento._(right(input));
   }
 
   factory DataDeNascimento.fromString(String input) {
     return DataDeNascimento._(
-      validateOptionDateFromString(input),
+      validateDateFromString(input),
     );
   }
 
   factory DataDeNascimento.empty() {
-    return DataDeNascimento(none());
+    return DataDeNascimento._(
+      left(
+        const ValueFailure.empty(
+          failedValue: null,
+        ),
+      ),
+    );
   }
 
   const DataDeNascimento._(this.value);
 }
 
-class Genero extends ValueObject<GeneroEnum?> {
+class Genero extends ValueObject<GeneroEnum> {
   @override
-  final Either<ValueFailure<GeneroEnum?>, GeneroEnum?> value;
+  final Either<ValueFailure<GeneroEnum?>, GeneroEnum> value;
 
-  factory Genero(GeneroEnum? input) {
+  factory Genero(GeneroEnum input) {
     return Genero._(right(input));
   }
 
   factory Genero.empty() {
-    return Genero(null);
+    return Genero._(
+      left(
+        const ValueFailure.optionNotSelected(failedValue: null),
+      ),
+    );
   }
 
   const Genero._(this.value);
 }
 
-class EstadoCivil extends ValueObject<EstadoCivilEnum?> {
+class EstadoCivil extends ValueObject<EstadoCivilEnum> {
   @override
-  final Either<ValueFailure<EstadoCivilEnum?>, EstadoCivilEnum?> value;
+  final Either<ValueFailure<EstadoCivilEnum?>, EstadoCivilEnum> value;
 
-  factory EstadoCivil(EstadoCivilEnum? input) {
+  factory EstadoCivil(EstadoCivilEnum input) {
     return EstadoCivil._(right(input));
   }
 
   factory EstadoCivil.empty() {
-    return EstadoCivil(null);
+    return EstadoCivil._(
+      left(
+        const ValueFailure.optionNotSelected(
+          failedValue: null,
+        ),
+      ),
+    );
   }
 
   const EstadoCivil._(this.value);
@@ -146,17 +162,23 @@ class Cidade extends ValueObject<String> {
 }
 
 class UnidadeFederativaDoBrasil
-    extends ValueObject<UnidadeFederativaDoBrasilEnum?> {
+    extends ValueObject<UnidadeFederativaDoBrasilEnum> {
   @override
   final Either<ValueFailure<UnidadeFederativaDoBrasilEnum?>,
-      UnidadeFederativaDoBrasilEnum?> value;
+      UnidadeFederativaDoBrasilEnum> value;
 
-  factory UnidadeFederativaDoBrasil(UnidadeFederativaDoBrasilEnum? input) {
+  factory UnidadeFederativaDoBrasil(UnidadeFederativaDoBrasilEnum input) {
     return UnidadeFederativaDoBrasil._(right(input));
   }
 
   factory UnidadeFederativaDoBrasil.empty() {
-    return UnidadeFederativaDoBrasil(null);
+    return UnidadeFederativaDoBrasil._(
+      left(
+        const ValueFailure.optionNotSelected(
+          failedValue: null,
+        ),
+      ),
+    );
   }
 
   const UnidadeFederativaDoBrasil._(this.value);
@@ -217,32 +239,47 @@ class TelefoneAlternativo extends ValueObject<String> {
   const TelefoneAlternativo._(this.value);
 }
 
-class VeiculoAutomotorProprio
-    extends ValueObject<VeiculoAutomotorProprioEnum?> {
+class VeiculoAutomotorProprio extends ValueObject<VeiculoAutomotorProprioEnum> {
   @override
   final Either<ValueFailure<VeiculoAutomotorProprioEnum?>,
-      VeiculoAutomotorProprioEnum?> value;
+      VeiculoAutomotorProprioEnum> value;
 
-  factory VeiculoAutomotorProprio(VeiculoAutomotorProprioEnum? input) {
+  factory VeiculoAutomotorProprio(VeiculoAutomotorProprioEnum input) {
     return VeiculoAutomotorProprio._(right(input));
   }
 
   factory VeiculoAutomotorProprio.empty() {
-    return VeiculoAutomotorProprio(null);
+    return VeiculoAutomotorProprio._(
+      left(
+        const ValueFailure.optionNotSelected(
+          failedValue: null,
+        ),
+      ),
+    );
   }
 
   const VeiculoAutomotorProprio._(this.value);
 }
 
-class NumeroDeFilhos extends ValueObject<String> {
+class NumeroDeFilhos extends ValueObject<int> {
   static const numeroMinimoDeFilhos = 0;
-  static const numeroMaximoDeFilhos = 10;
+  static const numeroMaximoDeFilhos = 50;
   @override
-  final Either<ValueFailure<String>, String> value;
+  final Either<ValueFailure<int?>, int> value;
 
-  factory NumeroDeFilhos(String input) {
+  factory NumeroDeFilhos(int input) {
     return NumeroDeFilhos._(
-      validateStringNotEmpty(input).flatMap(
+      validateRange(
+        input,
+        numeroMinimoDeFilhos,
+        numeroMaximoDeFilhos,
+      ),
+    );
+  }
+
+  factory NumeroDeFilhos.fromString(String input) {
+    return NumeroDeFilhos._(
+      validateInteger(input).flatMap(
         (input) => validateRange(
           input,
           numeroMinimoDeFilhos,
@@ -253,7 +290,11 @@ class NumeroDeFilhos extends ValueObject<String> {
   }
 
   factory NumeroDeFilhos.empty() {
-    return NumeroDeFilhos('');
+    return NumeroDeFilhos._(
+      left(
+        const ValueFailure.empty(failedValue: 0),
+      ),
+    );
   }
 
   const NumeroDeFilhos._(this.value);

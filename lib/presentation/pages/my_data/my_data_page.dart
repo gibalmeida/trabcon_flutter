@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -9,15 +11,17 @@ import 'package:trabcon_flutter/application/my_data/my_data_form_notifier.dart';
 import 'package:trabcon_flutter/application/my_data/my_data_form_state.dart';
 import 'package:trabcon_flutter/domain/core/enums.dart';
 import 'package:trabcon_flutter/domain/core/value_objects.dart';
-import 'package:trabcon_flutter/domain/my_data/my_data.dart';
-import 'package:trabcon_flutter/domain/my_data/value_objects.dart';
+import 'package:trabcon_flutter/domain/candidatos/candidato.dart';
+import 'package:trabcon_flutter/domain/candidatos/value_objects.dart';
 
 import 'package:intl/intl.dart';
+import 'package:trabcon_flutter/presentation/routes/app_router.gr.dart';
+import 'package:trabcon_flutter/providers.dart';
 
 final myDataProvider =
     StateNotifierProvider<MyDataFormNotifier, MyDataFormState>(
   (ref) {
-    return MyDataFormNotifier();
+    return MyDataFormNotifier(ref.watch(candidatoRepositoryProvider));
   },
 );
 
@@ -29,6 +33,17 @@ class MyDataPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Meu dados"),
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                AutoRouter.of(context).push(
+                    const MyDataPageRoute()); //TODO: enviar para a página inicial onde o usuário não está autenticado
+              },
+              icon: const Icon(
+                Icons.logout_outlined,
+              )),
+        ],
       ),
       body: MyDataForm(),
     );
@@ -44,14 +59,19 @@ class MyDataForm extends HookConsumerWidget {
     final state = ref.watch(myDataProvider);
 
     return state.maybeWhen(
-      (MyData myData) => buildForm(state, myData, ref),
-      loading: () => const Center(child: CircularProgressIndicator()),
+      (Candidato myData) => buildForm(state, myData, ref),
+      loading: () {
+        ref.read(myDataProvider.notifier).fetchUserData();
+        return const Center(child: CircularProgressIndicator());
+      },
       orElse: () => Container(),
     );
   }
 
-  LayoutBuilder buildForm(MyDataFormState state, MyData myData, WidgetRef ref) {
+  LayoutBuilder buildForm(
+      MyDataFormState state, Candidato myData, WidgetRef ref) {
     // TODO: Mudar o layout para telas maiores (web desktop)
+    // TODO: Retirar a lógica de negócios de dentro dos Widgets e passar para o state
     final nomeCompleto = useState(myData.nomeCompleto);
     final genero = useState(myData.genero);
 
@@ -113,50 +133,37 @@ class MyDataForm extends HookConsumerWidget {
     final gitHubUrl = useState(myData.gitHubUrl);
 
     final isCasado = useState<bool>(
-        estadoCivil.value.getOrCrash() == EstadoCivilEnum.casado);
-    final labelForConjuge = useState('Nome do conjuge');
+      estadoCivil.value.value.fold(
+        (failure) => false, // se o estado civil estiver vazio (não selecionado)
+        (value) => value == EstadoCivilEnum.casado,
+      ),
+    );
+    final labelForConjuge =
+        useState(_labelForConjuge(genero.value.getOrNull()));
 
     final dateFormat = DateFormat.yMd();
     _dataDeNascimentoController.text = dataDeNascimento.value.value.fold(
       (failure) => '',
-      (optDate) => optDate.fold(
-        () => '',
-        (date) => dateFormat.format(date),
-      ),
+      (value) => dateFormat.format(value),
     );
-
-    useEffect(() {
-      genero.addListener(() {
-        GeneroEnum? _genero = genero.value.getOrCrash();
-        switch (_genero) {
-          case GeneroEnum.masculino:
-            labelForConjuge.value = 'Nome da esposa';
-            break;
-          case GeneroEnum.feminino:
-            labelForConjuge.value = 'Nome do marido';
-            break;
-          default:
-            labelForConjuge.value = 'Nome do Conjuge';
-        }
-      });
-    }, [genero]);
-
-    useEffect(() {
-      estadoCivil.addListener(() {
-        isCasado.value =
-            estadoCivil.value.getOrCrash() == EstadoCivilEnum.casado;
-        if (!isCasado.value) {
-          conjuge.value = Conjuge(null);
-          conjugeController.text = '';
-        } else {
-          conjuge.value = myData.conjuge;
-          conjugeController.text = conjuge.value.getOrNull() ?? '';
-        }
-      });
-    }, [estadoCivil]);
 
     useEffect(
       () {
+        genero.addListener(() {
+          labelForConjuge.value = _labelForConjuge(genero.value.getOrCrash());
+        });
+        estadoCivil.addListener(() {
+          isCasado.value =
+              estadoCivil.value.getOrCrash() == EstadoCivilEnum.casado;
+          if (!isCasado.value) {
+            conjuge.value = Conjuge(null);
+            conjugeController.text = '';
+          } else {
+            conjuge.value = myData.conjuge;
+            conjugeController.text = conjuge.value.getOrNull() ?? '';
+          }
+        });
+        //TODO:colocar a atribuição do controller para o estado na chamada do validate de cada campo e não aqui.
         portadorDeNecessidadesEspeciais.addListener(() {
           if (portadorDeNecessidadesEspeciais.value.getOrCrash() == true) {
             necessidadesEspeciais.value = myData.necessidadesEspeciais;
@@ -204,6 +211,7 @@ class MyDataForm extends HookConsumerWidget {
             child: Column(
               children: [
                 TextFormField(
+                  autofocus: true,
                   initialValue: _initialValue(nomeCompleto),
                   maxLength: NomeCompleto.maxLength,
                   decoration: InputDecoration(
@@ -223,7 +231,7 @@ class MyDataForm extends HookConsumerWidget {
                   decoration: InputDecoration(
                     label: const Text('Data de nascimento'),
                     prefixIcon: const Icon(Icons.cake),
-                    suffixIcon: _feedbackIconForOption(dataDeNascimento),
+                    suffixIcon: _feedbackIcon(dataDeNascimento),
                   ),
                   onTap: () {
                     // Below line stops keyboard from appearing
@@ -236,7 +244,7 @@ class MyDataForm extends HookConsumerWidget {
                         _dataDeNascimentoController.text =
                             dateFormat.format(dataSelecionada);
                         dataDeNascimento.value =
-                            DataDeNascimento(some(dataSelecionada));
+                            DataDeNascimento(dataSelecionada);
                       }
                     });
                   },
@@ -245,7 +253,7 @@ class MyDataForm extends HookConsumerWidget {
                 ),
                 DropdownButtonFormField<GeneroEnum>(
                   hint: const Text('Gênero'),
-                  value: genero.value.getOrCrash(),
+                  value: genero.value.getOrNull(),
                   items: GeneroEnum.values.map<DropdownMenuItem<GeneroEnum>>(
                     (value) {
                       return DropdownMenuItem<GeneroEnum>(
@@ -255,7 +263,7 @@ class MyDataForm extends HookConsumerWidget {
                     },
                   ).toList(),
                   validator: (_) => _validateField(genero),
-                  onChanged: (value) => genero.value = Genero(value),
+                  onChanged: (value) => genero.value = Genero(value!),
                 ),
                 TextFormField(
                   initialValue: _initialValue(profissao),
@@ -272,7 +280,7 @@ class MyDataForm extends HookConsumerWidget {
                   onChanged: (value) => profissao.value = Profissao(value),
                 ),
                 TextFormField(
-                  initialValue: _initialValue(bairro),
+                  initialValue: _initialValue(endereco),
                   maxLength: Endereco.maxLength,
                   decoration: InputDecoration(
                     labelText: 'Endereço',
@@ -311,7 +319,7 @@ class MyDataForm extends HookConsumerWidget {
                 ),
                 DropdownButtonFormField<UnidadeFederativaDoBrasilEnum>(
                   hint: const Text('Estado de Residência'),
-                  value: uf.value.getOrCrash(),
+                  value: uf.value.getOrNull(),
                   items: UnidadeFederativaDoBrasilEnum.values
                       .map<DropdownMenuItem<UnidadeFederativaDoBrasilEnum>>(
                     (value) {
@@ -323,7 +331,7 @@ class MyDataForm extends HookConsumerWidget {
                   ).toList(),
                   validator: (_) => _validateField(uf),
                   onChanged: (value) =>
-                      uf.value = UnidadeFederativaDoBrasil(value),
+                      uf.value = UnidadeFederativaDoBrasil(value!),
                 ),
                 TextFormField(
                   initialValue: _initialValue(cep),
@@ -415,7 +423,7 @@ class MyDataForm extends HookConsumerWidget {
                 ),
                 DropdownButtonFormField<VeiculoAutomotorProprioEnum>(
                   hint: const Text('Possui veículo automotor próprio?'),
-                  value: veiculoAutomotorProprio.value.getOrCrash(),
+                  value: veiculoAutomotorProprio.value.getOrNull(),
                   items: VeiculoAutomotorProprioEnum.values
                       .map<DropdownMenuItem<VeiculoAutomotorProprioEnum>>(
                     (value) {
@@ -427,12 +435,12 @@ class MyDataForm extends HookConsumerWidget {
                   ).toList(),
                   validator: (_) => _validateField(veiculoAutomotorProprio),
                   onChanged: (value) => veiculoAutomotorProprio.value =
-                      VeiculoAutomotorProprio(value),
+                      VeiculoAutomotorProprio(value!),
                 ),
                 const Divider(),
                 DropdownButtonFormField<EstadoCivilEnum>(
                   hint: const Text('Estado Civil'),
-                  value: estadoCivil.value.getOrCrash(),
+                  value: estadoCivil.value.getOrNull(),
                   items: EstadoCivilEnum.values
                       .map<DropdownMenuItem<EstadoCivilEnum>>(
                     (value) {
@@ -443,7 +451,7 @@ class MyDataForm extends HookConsumerWidget {
                     },
                   ).toList(),
                   validator: (_) => _validateField(estadoCivil),
-                  onChanged: (value) => estadoCivil.value = EstadoCivil(value),
+                  onChanged: (value) => estadoCivil.value = EstadoCivil(value!),
                 ),
                 TextFormField(
                   controller: conjugeController,
@@ -459,7 +467,10 @@ class MyDataForm extends HookConsumerWidget {
                   validator: (_) => _validateField(conjuge),
                 ),
                 TextFormField(
-                  initialValue: _initialValue(numeroDeFilhos),
+                  initialValue: numeroDeFilhos.value.value.fold(
+                    (failure) => '',
+                    (value) => value.toString(),
+                  ),
                   maxLength: 2,
                   decoration: InputDecoration(
                     label: const Text('Número de filhos'),
@@ -470,7 +481,7 @@ class MyDataForm extends HookConsumerWidget {
                   validator: (_) => _validateField(numeroDeFilhos),
                   keyboardType: TextInputType.number,
                   onChanged: (value) =>
-                      numeroDeFilhos.value = NumeroDeFilhos(value),
+                      numeroDeFilhos.value = NumeroDeFilhos.fromString(value),
                 ),
                 const Divider(),
                 SwitchListTile(
@@ -687,11 +698,65 @@ class MyDataForm extends HookConsumerWidget {
                           content: Text('Salvando seus dados...'),
                         ),
                       );
-                      // state = MyDataFormState(MyData(
-                      //   nomeCompleto: nomeCompleto.value,
-                      //   profissao: profissao.value,
-                      // ));
+                      ref
+                          .read(myDataProvider.notifier)
+                          .add(
+                            myData.copyWith(
+                              nomeCompleto: nomeCompleto.value,
+                              genero: genero.value,
+                              dataDeNascimento: dataDeNascimento.value,
+                              profissao: profissao.value,
+                              endereco: endereco.value,
+                              bairro: bairro.value,
+                              cidade: cidade.value,
+                              uf: uf.value,
+                              cep: cep.value,
+                              telefonePrincipal: telefonePrincipal.value,
+                              telefoneAlternativo: telefoneAlternativo.value,
+                              veiculoAutomotorProprio:
+                                  veiculoAutomotorProprio.value,
+                              categoriasCnh: categoriasCnh.value,
+                              estadoCivil: estadoCivil.value,
+                              conjuge: conjuge.value,
+                              numeroDeFilhos: numeroDeFilhos.value,
+                              portadorDeNecessidadesEspeciais:
+                                  portadorDeNecessidadesEspeciais.value,
+                              necessidadesEspeciais:
+                                  necessidadesEspeciais.value,
+                              temParentesNaEmpresa: temParentesNaEmpresa.value,
+                              nomeDoParente: nomeDoParente.value,
+                              tipoDeParentesco: tipoDeParentesco.value,
+                              temConhecidosNaEmpresa:
+                                  temConhecidosNaEmpresa.value,
+                              nomesDasPessoasConhecidas:
+                                  nomesDasPessoasConhecidas.value,
+                              autoDescricaoDaPersonalidade:
+                                  autoDescricaoDaPersonalidade.value,
+                              motivacaoParaTrabalharNaEmpresa:
+                                  motivacaoParaTrabalharNaEmpresa.value,
+                              outrasInformacoesPessoais:
+                                  outrasInformacoesPessoais.value,
+                              facebookUrl: facebookUrl.value,
+                              instagramUrl: instagramUrl.value,
+                              twitterUrl: twitterUrl.value,
+                              linkedInUrl: linkedInUrl.value,
+                              gitHubUrl: gitHubUrl.value,
+                            ),
+                          )
+                          .then(
+                        (value) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Dados salvos com sucesso'),
+                              backgroundColor: Colors.green,
+                            ),
+                          );
+                        },
+                      );
                     }
+                    print(conjuge);
+                    print(necessidadesEspeciais);
+                    print(nomeDoParente);
                   },
                   child: const Text('Salvar'),
                 )
@@ -703,6 +768,18 @@ class MyDataForm extends HookConsumerWidget {
     });
   }
 
+  String _labelForConjuge(GeneroEnum? genero) {
+    switch (genero) {
+      case GeneroEnum.masculino:
+        return 'Nome da esposa';
+      case GeneroEnum.feminino:
+        return 'Nome do marido';
+
+      default:
+        return 'Nome do Conjuge';
+    }
+  }
+
   String _initialValue<T extends ValueObject>(ValueNotifier<T> valueNotifier) {
     final valueObject = valueNotifier.value;
     return valueObject.value.fold(
@@ -711,19 +788,6 @@ class MyDataForm extends HookConsumerWidget {
         orElse: () => failure.failedValue,
       ),
       (value) => value ?? '',
-    );
-  }
-
-  Icon? _feedbackIconForOption<T extends ValueObject<Option>>(
-      ValueNotifier<T> valueNotifier) {
-    final valueObject = valueNotifier.value;
-
-    return valueObject.value.fold(
-      (failure) => _notOkFeedbackIcon(),
-      (option) => option.fold(
-        () => null,
-        (optionValue) => _okFeedbackIcon(),
-      ),
     );
   }
 
@@ -764,6 +828,7 @@ class MyDataForm extends HookConsumerWidget {
         exceedingLength: (_, max) =>
             "O tamanho do campo excedeu o limite de $max caracteres.",
         empty: (_) => 'O preenchimento deste campo é obrigatório.',
+        optionNotSelected: (_) => 'É obrigatória a seleção de uma opção.',
         notAInteger: (_) => 'Este campo deve ser preenchido com um número.',
         outOfRange: (_, min, max) => 'O número deve estar entre $min e $max.',
         invalidCep: (_) =>

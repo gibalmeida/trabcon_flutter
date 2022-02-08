@@ -72,11 +72,12 @@ Either<ValueFailure<String>, String> validatePassword(String input) {
   }
 }
 
-Either<ValueFailure<String>, String> validateParseInt(String input) {
-  if (int.tryParse(input) == null) {
-    return left(ValueFailure.notAInteger(failedValue: input));
+Either<ValueFailure<int?>, int> validateInteger(String input) {
+  final parsedValue = int.tryParse(input);
+  if (parsedValue == null) {
+    return left(const ValueFailure.notAInteger(failedValue: null));
   } else {
-    return right(input);
+    return right(parsedValue);
   }
 }
 
@@ -94,36 +95,32 @@ Either<ValueFailure<DateTime?>, DateTime> validateDate(String input) {
   }
 }
 
-Either<ValueFailure<Option<DateTime>>, Option<DateTime>>
-    validateOptionDateFromString(String input) {
+Either<ValueFailure<DateTime?>, DateTime> validateDateFromString(String input) {
   if (input.isEmpty) {
     return left(
-      ValueFailure.empty(
-        failedValue: none(),
+      const ValueFailure.empty(
+        failedValue: null,
       ),
     );
   }
   try {
-    return right(some(DateFormat.yMd().parse(input)));
+    return right(DateFormat.yMd().parse(input));
   } on FormatException catch (_) {
     return left(
       ValueFailure.invalidDate(
-        failedValue: none(),
+        failedValue: null,
         invalidDate: input,
       ),
     );
   }
 }
 
-Either<ValueFailure<String>, String> validateRange(
-  String input,
+Either<ValueFailure<int>, int> validateRange(
+  int input,
   int minValue,
   int maxValue,
 ) {
-  int? parsedValue = int.tryParse(input);
-  if (parsedValue == null) {
-    return left(ValueFailure.notAInteger(failedValue: input));
-  } else if (parsedValue < minValue || parsedValue > maxValue) {
+  if (input < minValue || input > maxValue) {
     return left(ValueFailure.outOfRange(
         failedValue: input, min: minValue, max: maxValue));
   } else {

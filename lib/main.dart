@@ -2,11 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:trabcon_flutter/presentation/routes/app_router.dart';
+import 'firebase_options.dart';
 import 'package:trabcon_flutter/presentation/routes/app_router.gr.dart';
 
-void main() {
+void main() async {
   Intl.defaultLocale = 'pt_BR';
   // initializeDateFormatting('pt_BR');
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(ProviderScope(
     child: App(),
@@ -15,7 +23,7 @@ void main() {
 
 class App extends StatelessWidget {
   App({Key? key}) : super(key: key);
-  final _appRouter = AppRouter();
+  final _appRouter = AppRouter(authGuard: AuthGuard());
 
   // This widget is the root of your application.
   @override

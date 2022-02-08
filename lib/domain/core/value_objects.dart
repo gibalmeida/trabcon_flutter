@@ -10,7 +10,7 @@ import 'value_validators.dart';
 
 abstract class ValueObject<T> implements IValidatable {
   const ValueObject();
-  Either<ValueFailure<T>, T> get value;
+  Either<ValueFailure<T?>, T> get value;
 
   /// Throws [UnexpectedValueError] containing the [ValueFailure]
   T getOrCrash() {

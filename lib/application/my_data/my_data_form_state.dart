@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:trabcon_flutter/domain/my_data/my_data.dart';
+import 'package:trabcon_flutter/domain/candidatos/candidato.dart';
 
 part 'my_data_form_state.freezed.dart';
 
@@ -7,6 +7,6 @@ part 'my_data_form_state.freezed.dart';
 class MyDataFormState with _$MyDataFormState {
   factory MyDataFormState.initial() = _Initial;
   factory MyDataFormState.loading() = _Loading;
-  factory MyDataFormState(MyData myData) = _Data;
+  factory MyDataFormState(Candidato myData) = _Data;
   factory MyDataFormState.failure(String message) = _Failure;
 }

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'my_data.dart';
+part of 'candidato_dtos.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,43 +14,49 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-/// @nodoc
-class _$MyDataTearOff {
-  const _$MyDataTearOff();
+CandidatoDto _$CandidatoDtoFromJson(Map<String, dynamic> json) {
+  return _CandidatoDto.fromJson(json);
+}
 
-  _Data call(
-      {required NomeCompleto nomeCompleto,
-      required DataDeNascimento dataDeNascimento,
-      required Genero genero,
-      required Profissao profissao,
-      required Endereco endereco,
-      required Bairro bairro,
-      required Cidade cidade,
-      required UnidadeFederativaDoBrasil uf,
-      required Cep cep,
-      required TelefonePrincipal telefonePrincipal,
-      required TelefoneAlternativo telefoneAlternativo,
-      required CategoriasCnh categoriasCnh,
-      required VeiculoAutomotorProprio veiculoAutomotorProprio,
-      required EstadoCivil estadoCivil,
-      required NumeroDeFilhos numeroDeFilhos,
-      required Conjuge conjuge,
-      required PortadorDeNecessidadesEspeciais portadorDeNecessidadesEspeciais,
-      required NecessidadesEspeciais necessidadesEspeciais,
-      required TemParentesNaEmpresa temParentesNaEmpresa,
-      required NomeDoParente nomeDoParente,
-      required TipoDeParentesco tipoDeParentesco,
-      required TemConhecidosNaEmpresa temConhecidosNaEmpresa,
-      required NomesDasPessoasConhecidas nomesDasPessoasConhecidas,
-      required AutoDescricaoDaPersonalidade autoDescricaoDaPersonalidade,
-      required MotivacaoParaTrabalharNaEmpresa motivacaoParaTrabalharNaEmpresa,
-      required OutrasInformacoesPessoais outrasInformacoesPessoais,
-      required FacebookUrl facebookUrl,
-      required InstagramUrl instagramUrl,
-      required TwitterUrl twitterUrl,
-      required LinkedInUrl linkedInUrl,
-      required GitHubUrl gitHubUrl}) {
-    return _Data(
+/// @nodoc
+class _$CandidatoDtoTearOff {
+  const _$CandidatoDtoTearOff();
+
+  _CandidatoDto call(
+      {@JsonKey(ignore: true) String id = '',
+      required String nomeCompleto,
+      required DateTime dataDeNascimento,
+      required GeneroEnum genero,
+      required String profissao,
+      required String endereco,
+      required String bairro,
+      required String cidade,
+      required UnidadeFederativaDoBrasilEnum uf,
+      required String cep,
+      required String telefonePrincipal,
+      String? telefoneAlternativo,
+      required Map<String, bool> categoriasCnh,
+      required VeiculoAutomotorProprioEnum veiculoAutomotorProprio,
+      required EstadoCivilEnum estadoCivil,
+      required int numeroDeFilhos,
+      String? conjuge,
+      required bool portadorDeNecessidadesEspeciais,
+      String? necessidadesEspeciais,
+      required bool temParentesNaEmpresa,
+      String? nomeDoParente,
+      String? tipoDeParentesco,
+      required bool temConhecidosNaEmpresa,
+      String? nomesDasPessoasConhecidas,
+      required String autoDescricaoDaPersonalidade,
+      required String motivacaoParaTrabalharNaEmpresa,
+      String? outrasInformacoesPessoais,
+      String? facebookUrl,
+      String? instagramUrl,
+      String? twitterUrl,
+      String? linkedInUrl,
+      String? gitHubUrl}) {
+    return _CandidatoDto(
+      id: id,
       nomeCompleto: nomeCompleto,
       dataDeNascimento: dataDeNascimento,
       genero: genero,
@@ -84,107 +90,111 @@ class _$MyDataTearOff {
       gitHubUrl: gitHubUrl,
     );
   }
+
+  CandidatoDto fromJson(Map<String, Object?> json) {
+    return CandidatoDto.fromJson(json);
+  }
 }
 
 /// @nodoc
-const $MyData = _$MyDataTearOff();
+const $CandidatoDto = _$CandidatoDtoTearOff();
 
 /// @nodoc
-mixin _$MyData {
-  NomeCompleto get nomeCompleto => throw _privateConstructorUsedError;
-  DataDeNascimento get dataDeNascimento => throw _privateConstructorUsedError;
-  Genero get genero => throw _privateConstructorUsedError;
-  Profissao get profissao => throw _privateConstructorUsedError;
-  Endereco get endereco => throw _privateConstructorUsedError;
-  Bairro get bairro => throw _privateConstructorUsedError;
-  Cidade get cidade => throw _privateConstructorUsedError;
-  UnidadeFederativaDoBrasil get uf => throw _privateConstructorUsedError;
-  Cep get cep => throw _privateConstructorUsedError;
-  TelefonePrincipal get telefonePrincipal => throw _privateConstructorUsedError;
-  TelefoneAlternativo get telefoneAlternativo =>
-      throw _privateConstructorUsedError;
-  CategoriasCnh get categoriasCnh => throw _privateConstructorUsedError;
-  VeiculoAutomotorProprio get veiculoAutomotorProprio =>
-      throw _privateConstructorUsedError;
-  EstadoCivil get estadoCivil => throw _privateConstructorUsedError;
-  NumeroDeFilhos get numeroDeFilhos => throw _privateConstructorUsedError;
-  Conjuge get conjuge => throw _privateConstructorUsedError;
-  PortadorDeNecessidadesEspeciais get portadorDeNecessidadesEspeciais =>
-      throw _privateConstructorUsedError;
-  NecessidadesEspeciais get necessidadesEspeciais =>
-      throw _privateConstructorUsedError;
-  TemParentesNaEmpresa get temParentesNaEmpresa =>
-      throw _privateConstructorUsedError;
-  NomeDoParente get nomeDoParente => throw _privateConstructorUsedError;
-  TipoDeParentesco get tipoDeParentesco => throw _privateConstructorUsedError;
-  TemConhecidosNaEmpresa get temConhecidosNaEmpresa =>
-      throw _privateConstructorUsedError;
-  NomesDasPessoasConhecidas get nomesDasPessoasConhecidas =>
-      throw _privateConstructorUsedError;
-  AutoDescricaoDaPersonalidade get autoDescricaoDaPersonalidade =>
-      throw _privateConstructorUsedError;
-  MotivacaoParaTrabalharNaEmpresa get motivacaoParaTrabalharNaEmpresa =>
-      throw _privateConstructorUsedError;
-  OutrasInformacoesPessoais get outrasInformacoesPessoais =>
-      throw _privateConstructorUsedError;
-  FacebookUrl get facebookUrl => throw _privateConstructorUsedError;
-  InstagramUrl get instagramUrl => throw _privateConstructorUsedError;
-  TwitterUrl get twitterUrl => throw _privateConstructorUsedError;
-  LinkedInUrl get linkedInUrl => throw _privateConstructorUsedError;
-  GitHubUrl get gitHubUrl => throw _privateConstructorUsedError;
-
+mixin _$CandidatoDto {
   @JsonKey(ignore: true)
-  $MyDataCopyWith<MyData> get copyWith => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  String get nomeCompleto => throw _privateConstructorUsedError;
+  DateTime get dataDeNascimento => throw _privateConstructorUsedError;
+  GeneroEnum get genero => throw _privateConstructorUsedError;
+  String get profissao => throw _privateConstructorUsedError;
+  String get endereco => throw _privateConstructorUsedError;
+  String get bairro => throw _privateConstructorUsedError;
+  String get cidade => throw _privateConstructorUsedError;
+  UnidadeFederativaDoBrasilEnum get uf => throw _privateConstructorUsedError;
+  String get cep => throw _privateConstructorUsedError;
+  String get telefonePrincipal => throw _privateConstructorUsedError;
+  String? get telefoneAlternativo => throw _privateConstructorUsedError;
+  Map<String, bool> get categoriasCnh => throw _privateConstructorUsedError;
+  VeiculoAutomotorProprioEnum get veiculoAutomotorProprio =>
+      throw _privateConstructorUsedError;
+  EstadoCivilEnum get estadoCivil => throw _privateConstructorUsedError;
+  int get numeroDeFilhos => throw _privateConstructorUsedError;
+  String? get conjuge => throw _privateConstructorUsedError;
+  bool get portadorDeNecessidadesEspeciais =>
+      throw _privateConstructorUsedError;
+  String? get necessidadesEspeciais => throw _privateConstructorUsedError;
+  bool get temParentesNaEmpresa => throw _privateConstructorUsedError;
+  String? get nomeDoParente => throw _privateConstructorUsedError;
+  String? get tipoDeParentesco => throw _privateConstructorUsedError;
+  bool get temConhecidosNaEmpresa => throw _privateConstructorUsedError;
+  String? get nomesDasPessoasConhecidas => throw _privateConstructorUsedError;
+  String get autoDescricaoDaPersonalidade => throw _privateConstructorUsedError;
+  String get motivacaoParaTrabalharNaEmpresa =>
+      throw _privateConstructorUsedError;
+  String? get outrasInformacoesPessoais => throw _privateConstructorUsedError;
+  String? get facebookUrl => throw _privateConstructorUsedError;
+  String? get instagramUrl => throw _privateConstructorUsedError;
+  String? get twitterUrl => throw _privateConstructorUsedError;
+  String? get linkedInUrl => throw _privateConstructorUsedError;
+  String? get gitHubUrl => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $CandidatoDtoCopyWith<CandidatoDto> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $MyDataCopyWith<$Res> {
-  factory $MyDataCopyWith(MyData value, $Res Function(MyData) then) =
-      _$MyDataCopyWithImpl<$Res>;
+abstract class $CandidatoDtoCopyWith<$Res> {
+  factory $CandidatoDtoCopyWith(
+          CandidatoDto value, $Res Function(CandidatoDto) then) =
+      _$CandidatoDtoCopyWithImpl<$Res>;
   $Res call(
-      {NomeCompleto nomeCompleto,
-      DataDeNascimento dataDeNascimento,
-      Genero genero,
-      Profissao profissao,
-      Endereco endereco,
-      Bairro bairro,
-      Cidade cidade,
-      UnidadeFederativaDoBrasil uf,
-      Cep cep,
-      TelefonePrincipal telefonePrincipal,
-      TelefoneAlternativo telefoneAlternativo,
-      CategoriasCnh categoriasCnh,
-      VeiculoAutomotorProprio veiculoAutomotorProprio,
-      EstadoCivil estadoCivil,
-      NumeroDeFilhos numeroDeFilhos,
-      Conjuge conjuge,
-      PortadorDeNecessidadesEspeciais portadorDeNecessidadesEspeciais,
-      NecessidadesEspeciais necessidadesEspeciais,
-      TemParentesNaEmpresa temParentesNaEmpresa,
-      NomeDoParente nomeDoParente,
-      TipoDeParentesco tipoDeParentesco,
-      TemConhecidosNaEmpresa temConhecidosNaEmpresa,
-      NomesDasPessoasConhecidas nomesDasPessoasConhecidas,
-      AutoDescricaoDaPersonalidade autoDescricaoDaPersonalidade,
-      MotivacaoParaTrabalharNaEmpresa motivacaoParaTrabalharNaEmpresa,
-      OutrasInformacoesPessoais outrasInformacoesPessoais,
-      FacebookUrl facebookUrl,
-      InstagramUrl instagramUrl,
-      TwitterUrl twitterUrl,
-      LinkedInUrl linkedInUrl,
-      GitHubUrl gitHubUrl});
+      {@JsonKey(ignore: true) String id,
+      String nomeCompleto,
+      DateTime dataDeNascimento,
+      GeneroEnum genero,
+      String profissao,
+      String endereco,
+      String bairro,
+      String cidade,
+      UnidadeFederativaDoBrasilEnum uf,
+      String cep,
+      String telefonePrincipal,
+      String? telefoneAlternativo,
+      Map<String, bool> categoriasCnh,
+      VeiculoAutomotorProprioEnum veiculoAutomotorProprio,
+      EstadoCivilEnum estadoCivil,
+      int numeroDeFilhos,
+      String? conjuge,
+      bool portadorDeNecessidadesEspeciais,
+      String? necessidadesEspeciais,
+      bool temParentesNaEmpresa,
+      String? nomeDoParente,
+      String? tipoDeParentesco,
+      bool temConhecidosNaEmpresa,
+      String? nomesDasPessoasConhecidas,
+      String autoDescricaoDaPersonalidade,
+      String motivacaoParaTrabalharNaEmpresa,
+      String? outrasInformacoesPessoais,
+      String? facebookUrl,
+      String? instagramUrl,
+      String? twitterUrl,
+      String? linkedInUrl,
+      String? gitHubUrl});
 }
 
 /// @nodoc
-class _$MyDataCopyWithImpl<$Res> implements $MyDataCopyWith<$Res> {
-  _$MyDataCopyWithImpl(this._value, this._then);
+class _$CandidatoDtoCopyWithImpl<$Res> implements $CandidatoDtoCopyWith<$Res> {
+  _$CandidatoDtoCopyWithImpl(this._value, this._then);
 
-  final MyData _value;
+  final CandidatoDto _value;
   // ignore: unused_field
-  final $Res Function(MyData) _then;
+  final $Res Function(CandidatoDto) _then;
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? nomeCompleto = freezed,
     Object? dataDeNascimento = freezed,
     Object? genero = freezed,
@@ -218,186 +228,195 @@ class _$MyDataCopyWithImpl<$Res> implements $MyDataCopyWith<$Res> {
     Object? gitHubUrl = freezed,
   }) {
     return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       nomeCompleto: nomeCompleto == freezed
           ? _value.nomeCompleto
           : nomeCompleto // ignore: cast_nullable_to_non_nullable
-              as NomeCompleto,
+              as String,
       dataDeNascimento: dataDeNascimento == freezed
           ? _value.dataDeNascimento
           : dataDeNascimento // ignore: cast_nullable_to_non_nullable
-              as DataDeNascimento,
+              as DateTime,
       genero: genero == freezed
           ? _value.genero
           : genero // ignore: cast_nullable_to_non_nullable
-              as Genero,
+              as GeneroEnum,
       profissao: profissao == freezed
           ? _value.profissao
           : profissao // ignore: cast_nullable_to_non_nullable
-              as Profissao,
+              as String,
       endereco: endereco == freezed
           ? _value.endereco
           : endereco // ignore: cast_nullable_to_non_nullable
-              as Endereco,
+              as String,
       bairro: bairro == freezed
           ? _value.bairro
           : bairro // ignore: cast_nullable_to_non_nullable
-              as Bairro,
+              as String,
       cidade: cidade == freezed
           ? _value.cidade
           : cidade // ignore: cast_nullable_to_non_nullable
-              as Cidade,
+              as String,
       uf: uf == freezed
           ? _value.uf
           : uf // ignore: cast_nullable_to_non_nullable
-              as UnidadeFederativaDoBrasil,
+              as UnidadeFederativaDoBrasilEnum,
       cep: cep == freezed
           ? _value.cep
           : cep // ignore: cast_nullable_to_non_nullable
-              as Cep,
+              as String,
       telefonePrincipal: telefonePrincipal == freezed
           ? _value.telefonePrincipal
           : telefonePrincipal // ignore: cast_nullable_to_non_nullable
-              as TelefonePrincipal,
+              as String,
       telefoneAlternativo: telefoneAlternativo == freezed
           ? _value.telefoneAlternativo
           : telefoneAlternativo // ignore: cast_nullable_to_non_nullable
-              as TelefoneAlternativo,
+              as String?,
       categoriasCnh: categoriasCnh == freezed
           ? _value.categoriasCnh
           : categoriasCnh // ignore: cast_nullable_to_non_nullable
-              as CategoriasCnh,
+              as Map<String, bool>,
       veiculoAutomotorProprio: veiculoAutomotorProprio == freezed
           ? _value.veiculoAutomotorProprio
           : veiculoAutomotorProprio // ignore: cast_nullable_to_non_nullable
-              as VeiculoAutomotorProprio,
+              as VeiculoAutomotorProprioEnum,
       estadoCivil: estadoCivil == freezed
           ? _value.estadoCivil
           : estadoCivil // ignore: cast_nullable_to_non_nullable
-              as EstadoCivil,
+              as EstadoCivilEnum,
       numeroDeFilhos: numeroDeFilhos == freezed
           ? _value.numeroDeFilhos
           : numeroDeFilhos // ignore: cast_nullable_to_non_nullable
-              as NumeroDeFilhos,
+              as int,
       conjuge: conjuge == freezed
           ? _value.conjuge
           : conjuge // ignore: cast_nullable_to_non_nullable
-              as Conjuge,
+              as String?,
       portadorDeNecessidadesEspeciais: portadorDeNecessidadesEspeciais ==
               freezed
           ? _value.portadorDeNecessidadesEspeciais
           : portadorDeNecessidadesEspeciais // ignore: cast_nullable_to_non_nullable
-              as PortadorDeNecessidadesEspeciais,
+              as bool,
       necessidadesEspeciais: necessidadesEspeciais == freezed
           ? _value.necessidadesEspeciais
           : necessidadesEspeciais // ignore: cast_nullable_to_non_nullable
-              as NecessidadesEspeciais,
+              as String?,
       temParentesNaEmpresa: temParentesNaEmpresa == freezed
           ? _value.temParentesNaEmpresa
           : temParentesNaEmpresa // ignore: cast_nullable_to_non_nullable
-              as TemParentesNaEmpresa,
+              as bool,
       nomeDoParente: nomeDoParente == freezed
           ? _value.nomeDoParente
           : nomeDoParente // ignore: cast_nullable_to_non_nullable
-              as NomeDoParente,
+              as String?,
       tipoDeParentesco: tipoDeParentesco == freezed
           ? _value.tipoDeParentesco
           : tipoDeParentesco // ignore: cast_nullable_to_non_nullable
-              as TipoDeParentesco,
+              as String?,
       temConhecidosNaEmpresa: temConhecidosNaEmpresa == freezed
           ? _value.temConhecidosNaEmpresa
           : temConhecidosNaEmpresa // ignore: cast_nullable_to_non_nullable
-              as TemConhecidosNaEmpresa,
+              as bool,
       nomesDasPessoasConhecidas: nomesDasPessoasConhecidas == freezed
           ? _value.nomesDasPessoasConhecidas
           : nomesDasPessoasConhecidas // ignore: cast_nullable_to_non_nullable
-              as NomesDasPessoasConhecidas,
+              as String?,
       autoDescricaoDaPersonalidade: autoDescricaoDaPersonalidade == freezed
           ? _value.autoDescricaoDaPersonalidade
           : autoDescricaoDaPersonalidade // ignore: cast_nullable_to_non_nullable
-              as AutoDescricaoDaPersonalidade,
+              as String,
       motivacaoParaTrabalharNaEmpresa: motivacaoParaTrabalharNaEmpresa ==
               freezed
           ? _value.motivacaoParaTrabalharNaEmpresa
           : motivacaoParaTrabalharNaEmpresa // ignore: cast_nullable_to_non_nullable
-              as MotivacaoParaTrabalharNaEmpresa,
+              as String,
       outrasInformacoesPessoais: outrasInformacoesPessoais == freezed
           ? _value.outrasInformacoesPessoais
           : outrasInformacoesPessoais // ignore: cast_nullable_to_non_nullable
-              as OutrasInformacoesPessoais,
+              as String?,
       facebookUrl: facebookUrl == freezed
           ? _value.facebookUrl
           : facebookUrl // ignore: cast_nullable_to_non_nullable
-              as FacebookUrl,
+              as String?,
       instagramUrl: instagramUrl == freezed
           ? _value.instagramUrl
           : instagramUrl // ignore: cast_nullable_to_non_nullable
-              as InstagramUrl,
+              as String?,
       twitterUrl: twitterUrl == freezed
           ? _value.twitterUrl
           : twitterUrl // ignore: cast_nullable_to_non_nullable
-              as TwitterUrl,
+              as String?,
       linkedInUrl: linkedInUrl == freezed
           ? _value.linkedInUrl
           : linkedInUrl // ignore: cast_nullable_to_non_nullable
-              as LinkedInUrl,
+              as String?,
       gitHubUrl: gitHubUrl == freezed
           ? _value.gitHubUrl
           : gitHubUrl // ignore: cast_nullable_to_non_nullable
-              as GitHubUrl,
+              as String?,
     ));
   }
 }
 
 /// @nodoc
-abstract class _$DataCopyWith<$Res> implements $MyDataCopyWith<$Res> {
-  factory _$DataCopyWith(_Data value, $Res Function(_Data) then) =
-      __$DataCopyWithImpl<$Res>;
+abstract class _$CandidatoDtoCopyWith<$Res>
+    implements $CandidatoDtoCopyWith<$Res> {
+  factory _$CandidatoDtoCopyWith(
+          _CandidatoDto value, $Res Function(_CandidatoDto) then) =
+      __$CandidatoDtoCopyWithImpl<$Res>;
   @override
   $Res call(
-      {NomeCompleto nomeCompleto,
-      DataDeNascimento dataDeNascimento,
-      Genero genero,
-      Profissao profissao,
-      Endereco endereco,
-      Bairro bairro,
-      Cidade cidade,
-      UnidadeFederativaDoBrasil uf,
-      Cep cep,
-      TelefonePrincipal telefonePrincipal,
-      TelefoneAlternativo telefoneAlternativo,
-      CategoriasCnh categoriasCnh,
-      VeiculoAutomotorProprio veiculoAutomotorProprio,
-      EstadoCivil estadoCivil,
-      NumeroDeFilhos numeroDeFilhos,
-      Conjuge conjuge,
-      PortadorDeNecessidadesEspeciais portadorDeNecessidadesEspeciais,
-      NecessidadesEspeciais necessidadesEspeciais,
-      TemParentesNaEmpresa temParentesNaEmpresa,
-      NomeDoParente nomeDoParente,
-      TipoDeParentesco tipoDeParentesco,
-      TemConhecidosNaEmpresa temConhecidosNaEmpresa,
-      NomesDasPessoasConhecidas nomesDasPessoasConhecidas,
-      AutoDescricaoDaPersonalidade autoDescricaoDaPersonalidade,
-      MotivacaoParaTrabalharNaEmpresa motivacaoParaTrabalharNaEmpresa,
-      OutrasInformacoesPessoais outrasInformacoesPessoais,
-      FacebookUrl facebookUrl,
-      InstagramUrl instagramUrl,
-      TwitterUrl twitterUrl,
-      LinkedInUrl linkedInUrl,
-      GitHubUrl gitHubUrl});
+      {@JsonKey(ignore: true) String id,
+      String nomeCompleto,
+      DateTime dataDeNascimento,
+      GeneroEnum genero,
+      String profissao,
+      String endereco,
+      String bairro,
+      String cidade,
+      UnidadeFederativaDoBrasilEnum uf,
+      String cep,
+      String telefonePrincipal,
+      String? telefoneAlternativo,
+      Map<String, bool> categoriasCnh,
+      VeiculoAutomotorProprioEnum veiculoAutomotorProprio,
+      EstadoCivilEnum estadoCivil,
+      int numeroDeFilhos,
+      String? conjuge,
+      bool portadorDeNecessidadesEspeciais,
+      String? necessidadesEspeciais,
+      bool temParentesNaEmpresa,
+      String? nomeDoParente,
+      String? tipoDeParentesco,
+      bool temConhecidosNaEmpresa,
+      String? nomesDasPessoasConhecidas,
+      String autoDescricaoDaPersonalidade,
+      String motivacaoParaTrabalharNaEmpresa,
+      String? outrasInformacoesPessoais,
+      String? facebookUrl,
+      String? instagramUrl,
+      String? twitterUrl,
+      String? linkedInUrl,
+      String? gitHubUrl});
 }
 
 /// @nodoc
-class __$DataCopyWithImpl<$Res> extends _$MyDataCopyWithImpl<$Res>
-    implements _$DataCopyWith<$Res> {
-  __$DataCopyWithImpl(_Data _value, $Res Function(_Data) _then)
-      : super(_value, (v) => _then(v as _Data));
+class __$CandidatoDtoCopyWithImpl<$Res> extends _$CandidatoDtoCopyWithImpl<$Res>
+    implements _$CandidatoDtoCopyWith<$Res> {
+  __$CandidatoDtoCopyWithImpl(
+      _CandidatoDto _value, $Res Function(_CandidatoDto) _then)
+      : super(_value, (v) => _then(v as _CandidatoDto));
 
   @override
-  _Data get _value => super._value as _Data;
+  _CandidatoDto get _value => super._value as _CandidatoDto;
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? nomeCompleto = freezed,
     Object? dataDeNascimento = freezed,
     Object? genero = freezed,
@@ -430,142 +449,147 @@ class __$DataCopyWithImpl<$Res> extends _$MyDataCopyWithImpl<$Res>
     Object? linkedInUrl = freezed,
     Object? gitHubUrl = freezed,
   }) {
-    return _then(_Data(
+    return _then(_CandidatoDto(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       nomeCompleto: nomeCompleto == freezed
           ? _value.nomeCompleto
           : nomeCompleto // ignore: cast_nullable_to_non_nullable
-              as NomeCompleto,
+              as String,
       dataDeNascimento: dataDeNascimento == freezed
           ? _value.dataDeNascimento
           : dataDeNascimento // ignore: cast_nullable_to_non_nullable
-              as DataDeNascimento,
+              as DateTime,
       genero: genero == freezed
           ? _value.genero
           : genero // ignore: cast_nullable_to_non_nullable
-              as Genero,
+              as GeneroEnum,
       profissao: profissao == freezed
           ? _value.profissao
           : profissao // ignore: cast_nullable_to_non_nullable
-              as Profissao,
+              as String,
       endereco: endereco == freezed
           ? _value.endereco
           : endereco // ignore: cast_nullable_to_non_nullable
-              as Endereco,
+              as String,
       bairro: bairro == freezed
           ? _value.bairro
           : bairro // ignore: cast_nullable_to_non_nullable
-              as Bairro,
+              as String,
       cidade: cidade == freezed
           ? _value.cidade
           : cidade // ignore: cast_nullable_to_non_nullable
-              as Cidade,
+              as String,
       uf: uf == freezed
           ? _value.uf
           : uf // ignore: cast_nullable_to_non_nullable
-              as UnidadeFederativaDoBrasil,
+              as UnidadeFederativaDoBrasilEnum,
       cep: cep == freezed
           ? _value.cep
           : cep // ignore: cast_nullable_to_non_nullable
-              as Cep,
+              as String,
       telefonePrincipal: telefonePrincipal == freezed
           ? _value.telefonePrincipal
           : telefonePrincipal // ignore: cast_nullable_to_non_nullable
-              as TelefonePrincipal,
+              as String,
       telefoneAlternativo: telefoneAlternativo == freezed
           ? _value.telefoneAlternativo
           : telefoneAlternativo // ignore: cast_nullable_to_non_nullable
-              as TelefoneAlternativo,
+              as String?,
       categoriasCnh: categoriasCnh == freezed
           ? _value.categoriasCnh
           : categoriasCnh // ignore: cast_nullable_to_non_nullable
-              as CategoriasCnh,
+              as Map<String, bool>,
       veiculoAutomotorProprio: veiculoAutomotorProprio == freezed
           ? _value.veiculoAutomotorProprio
           : veiculoAutomotorProprio // ignore: cast_nullable_to_non_nullable
-              as VeiculoAutomotorProprio,
+              as VeiculoAutomotorProprioEnum,
       estadoCivil: estadoCivil == freezed
           ? _value.estadoCivil
           : estadoCivil // ignore: cast_nullable_to_non_nullable
-              as EstadoCivil,
+              as EstadoCivilEnum,
       numeroDeFilhos: numeroDeFilhos == freezed
           ? _value.numeroDeFilhos
           : numeroDeFilhos // ignore: cast_nullable_to_non_nullable
-              as NumeroDeFilhos,
+              as int,
       conjuge: conjuge == freezed
           ? _value.conjuge
           : conjuge // ignore: cast_nullable_to_non_nullable
-              as Conjuge,
+              as String?,
       portadorDeNecessidadesEspeciais: portadorDeNecessidadesEspeciais ==
               freezed
           ? _value.portadorDeNecessidadesEspeciais
           : portadorDeNecessidadesEspeciais // ignore: cast_nullable_to_non_nullable
-              as PortadorDeNecessidadesEspeciais,
+              as bool,
       necessidadesEspeciais: necessidadesEspeciais == freezed
           ? _value.necessidadesEspeciais
           : necessidadesEspeciais // ignore: cast_nullable_to_non_nullable
-              as NecessidadesEspeciais,
+              as String?,
       temParentesNaEmpresa: temParentesNaEmpresa == freezed
           ? _value.temParentesNaEmpresa
           : temParentesNaEmpresa // ignore: cast_nullable_to_non_nullable
-              as TemParentesNaEmpresa,
+              as bool,
       nomeDoParente: nomeDoParente == freezed
           ? _value.nomeDoParente
           : nomeDoParente // ignore: cast_nullable_to_non_nullable
-              as NomeDoParente,
+              as String?,
       tipoDeParentesco: tipoDeParentesco == freezed
           ? _value.tipoDeParentesco
           : tipoDeParentesco // ignore: cast_nullable_to_non_nullable
-              as TipoDeParentesco,
+              as String?,
       temConhecidosNaEmpresa: temConhecidosNaEmpresa == freezed
           ? _value.temConhecidosNaEmpresa
           : temConhecidosNaEmpresa // ignore: cast_nullable_to_non_nullable
-              as TemConhecidosNaEmpresa,
+              as bool,
       nomesDasPessoasConhecidas: nomesDasPessoasConhecidas == freezed
           ? _value.nomesDasPessoasConhecidas
           : nomesDasPessoasConhecidas // ignore: cast_nullable_to_non_nullable
-              as NomesDasPessoasConhecidas,
+              as String?,
       autoDescricaoDaPersonalidade: autoDescricaoDaPersonalidade == freezed
           ? _value.autoDescricaoDaPersonalidade
           : autoDescricaoDaPersonalidade // ignore: cast_nullable_to_non_nullable
-              as AutoDescricaoDaPersonalidade,
+              as String,
       motivacaoParaTrabalharNaEmpresa: motivacaoParaTrabalharNaEmpresa ==
               freezed
           ? _value.motivacaoParaTrabalharNaEmpresa
           : motivacaoParaTrabalharNaEmpresa // ignore: cast_nullable_to_non_nullable
-              as MotivacaoParaTrabalharNaEmpresa,
+              as String,
       outrasInformacoesPessoais: outrasInformacoesPessoais == freezed
           ? _value.outrasInformacoesPessoais
           : outrasInformacoesPessoais // ignore: cast_nullable_to_non_nullable
-              as OutrasInformacoesPessoais,
+              as String?,
       facebookUrl: facebookUrl == freezed
           ? _value.facebookUrl
           : facebookUrl // ignore: cast_nullable_to_non_nullable
-              as FacebookUrl,
+              as String?,
       instagramUrl: instagramUrl == freezed
           ? _value.instagramUrl
           : instagramUrl // ignore: cast_nullable_to_non_nullable
-              as InstagramUrl,
+              as String?,
       twitterUrl: twitterUrl == freezed
           ? _value.twitterUrl
           : twitterUrl // ignore: cast_nullable_to_non_nullable
-              as TwitterUrl,
+              as String?,
       linkedInUrl: linkedInUrl == freezed
           ? _value.linkedInUrl
           : linkedInUrl // ignore: cast_nullable_to_non_nullable
-              as LinkedInUrl,
+              as String?,
       gitHubUrl: gitHubUrl == freezed
           ? _value.gitHubUrl
           : gitHubUrl // ignore: cast_nullable_to_non_nullable
-              as GitHubUrl,
+              as String?,
     ));
   }
 }
 
 /// @nodoc
-
-class _$_Data extends _Data {
-  const _$_Data(
-      {required this.nomeCompleto,
+@JsonSerializable()
+class _$_CandidatoDto extends _CandidatoDto {
+  _$_CandidatoDto(
+      {@JsonKey(ignore: true) this.id = '',
+      required this.nomeCompleto,
       required this.dataDeNascimento,
       required this.genero,
       required this.profissao,
@@ -575,102 +599,109 @@ class _$_Data extends _Data {
       required this.uf,
       required this.cep,
       required this.telefonePrincipal,
-      required this.telefoneAlternativo,
+      this.telefoneAlternativo,
       required this.categoriasCnh,
       required this.veiculoAutomotorProprio,
       required this.estadoCivil,
       required this.numeroDeFilhos,
-      required this.conjuge,
+      this.conjuge,
       required this.portadorDeNecessidadesEspeciais,
-      required this.necessidadesEspeciais,
+      this.necessidadesEspeciais,
       required this.temParentesNaEmpresa,
-      required this.nomeDoParente,
-      required this.tipoDeParentesco,
+      this.nomeDoParente,
+      this.tipoDeParentesco,
       required this.temConhecidosNaEmpresa,
-      required this.nomesDasPessoasConhecidas,
+      this.nomesDasPessoasConhecidas,
       required this.autoDescricaoDaPersonalidade,
       required this.motivacaoParaTrabalharNaEmpresa,
-      required this.outrasInformacoesPessoais,
-      required this.facebookUrl,
-      required this.instagramUrl,
-      required this.twitterUrl,
-      required this.linkedInUrl,
-      required this.gitHubUrl})
+      this.outrasInformacoesPessoais,
+      this.facebookUrl,
+      this.instagramUrl,
+      this.twitterUrl,
+      this.linkedInUrl,
+      this.gitHubUrl})
       : super._();
 
+  factory _$_CandidatoDto.fromJson(Map<String, dynamic> json) =>
+      _$$_CandidatoDtoFromJson(json);
+
   @override
-  final NomeCompleto nomeCompleto;
+  @JsonKey(ignore: true)
+  final String id;
   @override
-  final DataDeNascimento dataDeNascimento;
+  final String nomeCompleto;
   @override
-  final Genero genero;
+  final DateTime dataDeNascimento;
   @override
-  final Profissao profissao;
+  final GeneroEnum genero;
   @override
-  final Endereco endereco;
+  final String profissao;
   @override
-  final Bairro bairro;
+  final String endereco;
   @override
-  final Cidade cidade;
+  final String bairro;
   @override
-  final UnidadeFederativaDoBrasil uf;
+  final String cidade;
   @override
-  final Cep cep;
+  final UnidadeFederativaDoBrasilEnum uf;
   @override
-  final TelefonePrincipal telefonePrincipal;
+  final String cep;
   @override
-  final TelefoneAlternativo telefoneAlternativo;
+  final String telefonePrincipal;
   @override
-  final CategoriasCnh categoriasCnh;
+  final String? telefoneAlternativo;
   @override
-  final VeiculoAutomotorProprio veiculoAutomotorProprio;
+  final Map<String, bool> categoriasCnh;
   @override
-  final EstadoCivil estadoCivil;
+  final VeiculoAutomotorProprioEnum veiculoAutomotorProprio;
   @override
-  final NumeroDeFilhos numeroDeFilhos;
+  final EstadoCivilEnum estadoCivil;
   @override
-  final Conjuge conjuge;
+  final int numeroDeFilhos;
   @override
-  final PortadorDeNecessidadesEspeciais portadorDeNecessidadesEspeciais;
+  final String? conjuge;
   @override
-  final NecessidadesEspeciais necessidadesEspeciais;
+  final bool portadorDeNecessidadesEspeciais;
   @override
-  final TemParentesNaEmpresa temParentesNaEmpresa;
+  final String? necessidadesEspeciais;
   @override
-  final NomeDoParente nomeDoParente;
+  final bool temParentesNaEmpresa;
   @override
-  final TipoDeParentesco tipoDeParentesco;
+  final String? nomeDoParente;
   @override
-  final TemConhecidosNaEmpresa temConhecidosNaEmpresa;
+  final String? tipoDeParentesco;
   @override
-  final NomesDasPessoasConhecidas nomesDasPessoasConhecidas;
+  final bool temConhecidosNaEmpresa;
   @override
-  final AutoDescricaoDaPersonalidade autoDescricaoDaPersonalidade;
+  final String? nomesDasPessoasConhecidas;
   @override
-  final MotivacaoParaTrabalharNaEmpresa motivacaoParaTrabalharNaEmpresa;
+  final String autoDescricaoDaPersonalidade;
   @override
-  final OutrasInformacoesPessoais outrasInformacoesPessoais;
+  final String motivacaoParaTrabalharNaEmpresa;
   @override
-  final FacebookUrl facebookUrl;
+  final String? outrasInformacoesPessoais;
   @override
-  final InstagramUrl instagramUrl;
+  final String? facebookUrl;
   @override
-  final TwitterUrl twitterUrl;
+  final String? instagramUrl;
   @override
-  final LinkedInUrl linkedInUrl;
+  final String? twitterUrl;
   @override
-  final GitHubUrl gitHubUrl;
+  final String? linkedInUrl;
+  @override
+  final String? gitHubUrl;
 
   @override
   String toString() {
-    return 'MyData(nomeCompleto: $nomeCompleto, dataDeNascimento: $dataDeNascimento, genero: $genero, profissao: $profissao, endereco: $endereco, bairro: $bairro, cidade: $cidade, uf: $uf, cep: $cep, telefonePrincipal: $telefonePrincipal, telefoneAlternativo: $telefoneAlternativo, categoriasCnh: $categoriasCnh, veiculoAutomotorProprio: $veiculoAutomotorProprio, estadoCivil: $estadoCivil, numeroDeFilhos: $numeroDeFilhos, conjuge: $conjuge, portadorDeNecessidadesEspeciais: $portadorDeNecessidadesEspeciais, necessidadesEspeciais: $necessidadesEspeciais, temParentesNaEmpresa: $temParentesNaEmpresa, nomeDoParente: $nomeDoParente, tipoDeParentesco: $tipoDeParentesco, temConhecidosNaEmpresa: $temConhecidosNaEmpresa, nomesDasPessoasConhecidas: $nomesDasPessoasConhecidas, autoDescricaoDaPersonalidade: $autoDescricaoDaPersonalidade, motivacaoParaTrabalharNaEmpresa: $motivacaoParaTrabalharNaEmpresa, outrasInformacoesPessoais: $outrasInformacoesPessoais, facebookUrl: $facebookUrl, instagramUrl: $instagramUrl, twitterUrl: $twitterUrl, linkedInUrl: $linkedInUrl, gitHubUrl: $gitHubUrl)';
+    return 'CandidatoDto(id: $id, nomeCompleto: $nomeCompleto, dataDeNascimento: $dataDeNascimento, genero: $genero, profissao: $profissao, endereco: $endereco, bairro: $bairro, cidade: $cidade, uf: $uf, cep: $cep, telefonePrincipal: $telefonePrincipal, telefoneAlternativo: $telefoneAlternativo, categoriasCnh: $categoriasCnh, veiculoAutomotorProprio: $veiculoAutomotorProprio, estadoCivil: $estadoCivil, numeroDeFilhos: $numeroDeFilhos, conjuge: $conjuge, portadorDeNecessidadesEspeciais: $portadorDeNecessidadesEspeciais, necessidadesEspeciais: $necessidadesEspeciais, temParentesNaEmpresa: $temParentesNaEmpresa, nomeDoParente: $nomeDoParente, tipoDeParentesco: $tipoDeParentesco, temConhecidosNaEmpresa: $temConhecidosNaEmpresa, nomesDasPessoasConhecidas: $nomesDasPessoasConhecidas, autoDescricaoDaPersonalidade: $autoDescricaoDaPersonalidade, motivacaoParaTrabalharNaEmpresa: $motivacaoParaTrabalharNaEmpresa, outrasInformacoesPessoais: $outrasInformacoesPessoais, facebookUrl: $facebookUrl, instagramUrl: $instagramUrl, twitterUrl: $twitterUrl, linkedInUrl: $linkedInUrl, gitHubUrl: $gitHubUrl)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Data &&
+            other is _CandidatoDto &&
+            const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality()
                 .equals(other.nomeCompleto, nomeCompleto) &&
             const DeepCollectionEquality()
@@ -732,6 +763,7 @@ class _$_Data extends _Data {
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
+        const DeepCollectionEquality().hash(id),
         const DeepCollectionEquality().hash(nomeCompleto),
         const DeepCollectionEquality().hash(dataDeNascimento),
         const DeepCollectionEquality().hash(genero),
@@ -767,108 +799,121 @@ class _$_Data extends _Data {
 
   @JsonKey(ignore: true)
   @override
-  _$DataCopyWith<_Data> get copyWith =>
-      __$DataCopyWithImpl<_Data>(this, _$identity);
+  _$CandidatoDtoCopyWith<_CandidatoDto> get copyWith =>
+      __$CandidatoDtoCopyWithImpl<_CandidatoDto>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_CandidatoDtoToJson(this);
+  }
 }
 
-abstract class _Data extends MyData {
-  const factory _Data(
-      {required NomeCompleto nomeCompleto,
-      required DataDeNascimento dataDeNascimento,
-      required Genero genero,
-      required Profissao profissao,
-      required Endereco endereco,
-      required Bairro bairro,
-      required Cidade cidade,
-      required UnidadeFederativaDoBrasil uf,
-      required Cep cep,
-      required TelefonePrincipal telefonePrincipal,
-      required TelefoneAlternativo telefoneAlternativo,
-      required CategoriasCnh categoriasCnh,
-      required VeiculoAutomotorProprio veiculoAutomotorProprio,
-      required EstadoCivil estadoCivil,
-      required NumeroDeFilhos numeroDeFilhos,
-      required Conjuge conjuge,
-      required PortadorDeNecessidadesEspeciais portadorDeNecessidadesEspeciais,
-      required NecessidadesEspeciais necessidadesEspeciais,
-      required TemParentesNaEmpresa temParentesNaEmpresa,
-      required NomeDoParente nomeDoParente,
-      required TipoDeParentesco tipoDeParentesco,
-      required TemConhecidosNaEmpresa temConhecidosNaEmpresa,
-      required NomesDasPessoasConhecidas nomesDasPessoasConhecidas,
-      required AutoDescricaoDaPersonalidade autoDescricaoDaPersonalidade,
-      required MotivacaoParaTrabalharNaEmpresa motivacaoParaTrabalharNaEmpresa,
-      required OutrasInformacoesPessoais outrasInformacoesPessoais,
-      required FacebookUrl facebookUrl,
-      required InstagramUrl instagramUrl,
-      required TwitterUrl twitterUrl,
-      required LinkedInUrl linkedInUrl,
-      required GitHubUrl gitHubUrl}) = _$_Data;
-  const _Data._() : super._();
+abstract class _CandidatoDto extends CandidatoDto {
+  factory _CandidatoDto(
+      {@JsonKey(ignore: true) String id,
+      required String nomeCompleto,
+      required DateTime dataDeNascimento,
+      required GeneroEnum genero,
+      required String profissao,
+      required String endereco,
+      required String bairro,
+      required String cidade,
+      required UnidadeFederativaDoBrasilEnum uf,
+      required String cep,
+      required String telefonePrincipal,
+      String? telefoneAlternativo,
+      required Map<String, bool> categoriasCnh,
+      required VeiculoAutomotorProprioEnum veiculoAutomotorProprio,
+      required EstadoCivilEnum estadoCivil,
+      required int numeroDeFilhos,
+      String? conjuge,
+      required bool portadorDeNecessidadesEspeciais,
+      String? necessidadesEspeciais,
+      required bool temParentesNaEmpresa,
+      String? nomeDoParente,
+      String? tipoDeParentesco,
+      required bool temConhecidosNaEmpresa,
+      String? nomesDasPessoasConhecidas,
+      required String autoDescricaoDaPersonalidade,
+      required String motivacaoParaTrabalharNaEmpresa,
+      String? outrasInformacoesPessoais,
+      String? facebookUrl,
+      String? instagramUrl,
+      String? twitterUrl,
+      String? linkedInUrl,
+      String? gitHubUrl}) = _$_CandidatoDto;
+  _CandidatoDto._() : super._();
+
+  factory _CandidatoDto.fromJson(Map<String, dynamic> json) =
+      _$_CandidatoDto.fromJson;
 
   @override
-  NomeCompleto get nomeCompleto;
+  @JsonKey(ignore: true)
+  String get id;
   @override
-  DataDeNascimento get dataDeNascimento;
+  String get nomeCompleto;
   @override
-  Genero get genero;
+  DateTime get dataDeNascimento;
   @override
-  Profissao get profissao;
+  GeneroEnum get genero;
   @override
-  Endereco get endereco;
+  String get profissao;
   @override
-  Bairro get bairro;
+  String get endereco;
   @override
-  Cidade get cidade;
+  String get bairro;
   @override
-  UnidadeFederativaDoBrasil get uf;
+  String get cidade;
   @override
-  Cep get cep;
+  UnidadeFederativaDoBrasilEnum get uf;
   @override
-  TelefonePrincipal get telefonePrincipal;
+  String get cep;
   @override
-  TelefoneAlternativo get telefoneAlternativo;
+  String get telefonePrincipal;
   @override
-  CategoriasCnh get categoriasCnh;
+  String? get telefoneAlternativo;
   @override
-  VeiculoAutomotorProprio get veiculoAutomotorProprio;
+  Map<String, bool> get categoriasCnh;
   @override
-  EstadoCivil get estadoCivil;
+  VeiculoAutomotorProprioEnum get veiculoAutomotorProprio;
   @override
-  NumeroDeFilhos get numeroDeFilhos;
+  EstadoCivilEnum get estadoCivil;
   @override
-  Conjuge get conjuge;
+  int get numeroDeFilhos;
   @override
-  PortadorDeNecessidadesEspeciais get portadorDeNecessidadesEspeciais;
+  String? get conjuge;
   @override
-  NecessidadesEspeciais get necessidadesEspeciais;
+  bool get portadorDeNecessidadesEspeciais;
   @override
-  TemParentesNaEmpresa get temParentesNaEmpresa;
+  String? get necessidadesEspeciais;
   @override
-  NomeDoParente get nomeDoParente;
+  bool get temParentesNaEmpresa;
   @override
-  TipoDeParentesco get tipoDeParentesco;
+  String? get nomeDoParente;
   @override
-  TemConhecidosNaEmpresa get temConhecidosNaEmpresa;
+  String? get tipoDeParentesco;
   @override
-  NomesDasPessoasConhecidas get nomesDasPessoasConhecidas;
+  bool get temConhecidosNaEmpresa;
   @override
-  AutoDescricaoDaPersonalidade get autoDescricaoDaPersonalidade;
+  String? get nomesDasPessoasConhecidas;
   @override
-  MotivacaoParaTrabalharNaEmpresa get motivacaoParaTrabalharNaEmpresa;
+  String get autoDescricaoDaPersonalidade;
   @override
-  OutrasInformacoesPessoais get outrasInformacoesPessoais;
+  String get motivacaoParaTrabalharNaEmpresa;
   @override
-  FacebookUrl get facebookUrl;
+  String? get outrasInformacoesPessoais;
   @override
-  InstagramUrl get instagramUrl;
+  String? get facebookUrl;
   @override
-  TwitterUrl get twitterUrl;
+  String? get instagramUrl;
   @override
-  LinkedInUrl get linkedInUrl;
+  String? get twitterUrl;
   @override
-  GitHubUrl get gitHubUrl;
+  String? get linkedInUrl;
+  @override
+  String? get gitHubUrl;
   @override
   @JsonKey(ignore: true)
-  _$DataCopyWith<_Data> get copyWith => throw _privateConstructorUsedError;
+  _$CandidatoDtoCopyWith<_CandidatoDto> get copyWith =>
+      throw _privateConstructorUsedError;
 }

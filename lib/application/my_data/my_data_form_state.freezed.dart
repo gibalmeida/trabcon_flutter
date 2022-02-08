@@ -26,7 +26,7 @@ class _$MyDataFormStateTearOff {
     return _Loading();
   }
 
-  _Data call(MyData myData) {
+  _Data call(Candidato myData) {
     return _Data(
       myData,
     );
@@ -46,7 +46,7 @@ const $MyDataFormState = _$MyDataFormStateTearOff();
 mixin _$MyDataFormState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(MyData myData) $default, {
+    TResult Function(Candidato myData) $default, {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(String message) failure,
@@ -54,7 +54,7 @@ mixin _$MyDataFormState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult Function(MyData myData)? $default, {
+    TResult Function(Candidato myData)? $default, {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String message)? failure,
@@ -62,7 +62,7 @@ mixin _$MyDataFormState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(MyData myData)? $default, {
+    TResult Function(Candidato myData)? $default, {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String message)? failure,
@@ -151,7 +151,7 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(MyData myData) $default, {
+    TResult Function(Candidato myData) $default, {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(String message) failure,
@@ -162,7 +162,7 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult Function(MyData myData)? $default, {
+    TResult Function(Candidato myData)? $default, {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String message)? failure,
@@ -173,7 +173,7 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(MyData myData)? $default, {
+    TResult Function(Candidato myData)? $default, {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String message)? failure,
@@ -265,7 +265,7 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(MyData myData) $default, {
+    TResult Function(Candidato myData) $default, {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(String message) failure,
@@ -276,7 +276,7 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult Function(MyData myData)? $default, {
+    TResult Function(Candidato myData)? $default, {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String message)? failure,
@@ -287,7 +287,7 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(MyData myData)? $default, {
+    TResult Function(Candidato myData)? $default, {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String message)? failure,
@@ -345,9 +345,9 @@ abstract class _Loading implements MyDataFormState {
 abstract class _$DataCopyWith<$Res> {
   factory _$DataCopyWith(_Data value, $Res Function(_Data) then) =
       __$DataCopyWithImpl<$Res>;
-  $Res call({MyData myData});
+  $Res call({Candidato myData});
 
-  $MyDataCopyWith<$Res> get myData;
+  $CandidatoCopyWith<$Res> get myData;
 }
 
 /// @nodoc
@@ -367,13 +367,13 @@ class __$DataCopyWithImpl<$Res> extends _$MyDataFormStateCopyWithImpl<$Res>
       myData == freezed
           ? _value.myData
           : myData // ignore: cast_nullable_to_non_nullable
-              as MyData,
+              as Candidato,
     ));
   }
 
   @override
-  $MyDataCopyWith<$Res> get myData {
-    return $MyDataCopyWith<$Res>(_value.myData, (value) {
+  $CandidatoCopyWith<$Res> get myData {
+    return $CandidatoCopyWith<$Res>(_value.myData, (value) {
       return _then(_value.copyWith(myData: value));
     });
   }
@@ -385,7 +385,7 @@ class _$_Data implements _Data {
   _$_Data(this.myData);
 
   @override
-  final MyData myData;
+  final Candidato myData;
 
   @override
   String toString() {
@@ -412,7 +412,7 @@ class _$_Data implements _Data {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(MyData myData) $default, {
+    TResult Function(Candidato myData) $default, {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(String message) failure,
@@ -423,7 +423,7 @@ class _$_Data implements _Data {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult Function(MyData myData)? $default, {
+    TResult Function(Candidato myData)? $default, {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String message)? failure,
@@ -434,7 +434,7 @@ class _$_Data implements _Data {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(MyData myData)? $default, {
+    TResult Function(Candidato myData)? $default, {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String message)? failure,
@@ -485,9 +485,9 @@ class _$_Data implements _Data {
 }
 
 abstract class _Data implements MyDataFormState {
-  factory _Data(MyData myData) = _$_Data;
+  factory _Data(Candidato myData) = _$_Data;
 
-  MyData get myData;
+  Candidato get myData;
   @JsonKey(ignore: true)
   _$DataCopyWith<_Data> get copyWith => throw _privateConstructorUsedError;
 }
@@ -554,7 +554,7 @@ class _$_Failure implements _Failure {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(MyData myData) $default, {
+    TResult Function(Candidato myData) $default, {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(String message) failure,
@@ -565,7 +565,7 @@ class _$_Failure implements _Failure {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult Function(MyData myData)? $default, {
+    TResult Function(Candidato myData)? $default, {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String message)? failure,
@@ -576,7 +576,7 @@ class _$_Failure implements _Failure {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(MyData myData)? $default, {
+    TResult Function(Candidato myData)? $default, {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String message)? failure,

@@ -1,12 +1,15 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:trabcon_flutter/domain/my_data/value_objects.dart';
+import 'package:trabcon_flutter/domain/candidatos/value_objects.dart';
+import 'package:trabcon_flutter/domain/core/enums.dart';
+import 'package:trabcon_flutter/domain/core/value_objects.dart';
 
-part 'my_data.freezed.dart';
+part 'candidato.freezed.dart';
 
 @freezed
-class MyData with _$MyData {
-  const MyData._();
-  const factory MyData({
+class Candidato with _$Candidato {
+  const Candidato._();
+  const factory Candidato({
+    required UniqueId id,
     required NomeCompleto nomeCompleto,
     required DataDeNascimento dataDeNascimento,
     required Genero genero,
@@ -40,7 +43,8 @@ class MyData with _$MyData {
     required GitHubUrl gitHubUrl,
   }) = _Data;
 
-  factory MyData.empty() => _Data(
+  factory Candidato.empty() => _Data(
+        id: UniqueId(),
         nomeCompleto: NomeCompleto.empty(),
         dataDeNascimento: DataDeNascimento.empty(),
         genero: Genero.empty(),
@@ -75,4 +79,17 @@ class MyData with _$MyData {
         linkedInUrl: LinkedInUrl.empty(),
         gitHubUrl: GitHubUrl.empty(),
       );
+
+  bool get conjugeIsOptional =>
+      estadoCivil.getOrNull() != EstadoCivilEnum.casado;
+
+  bool get necessidadesEspeciaisIsOptional =>
+      !portadorDeNecessidadesEspeciais.getOrElse(false);
+
+  bool get nomeDoParenteIsOptional => temParentesNaEmpresa.getOrElse(false);
+
+  bool get tipoDeParentescoIsOptional => temParentesNaEmpresa.getOrElse(false);
+
+  bool get nomesDasPessoasConhecidasIsOptional =>
+      temConhecidosNaEmpresa.getOrElse(false);
 }
