@@ -16,15 +16,15 @@ class CandidatoRepository implements ICandidatosRepository {
       );
 
   @override
-  Future<Either<CandidatosFailure, Unit>> create(Candidato candidato) async {
-    print(candidato);
+  Future<Either<CandidatosFailure, Unit>> createOrUpdate(
+      Candidato candidato) async {
     try {
       await candidatosRef
           .doc(_userId())
           .set(CandidatoDto.fromDomain(candidato));
 
       return right(unit);
-    } on PlatformException catch (_e) {
+    } on PlatformException catch (_) {
       return left(CandidatosFailure.unexpected());
     }
   }

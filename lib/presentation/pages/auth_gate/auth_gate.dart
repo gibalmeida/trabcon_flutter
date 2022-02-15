@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
 
 class AuthGate extends StatelessWidget {
-  const AuthGate({Key? key, required this.onResult}) : super(key: key);
-  final Function onResult;
+  const AuthGate({Key? key, required this.child}) : super(key: key);
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +17,7 @@ class AuthGate extends StatelessWidget {
           ]);
         }
 
-        onResult(true);
-        return Container();
+        return child;
       },
     );
   }

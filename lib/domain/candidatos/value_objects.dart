@@ -53,8 +53,12 @@ class Genero extends ValueObject<GeneroEnum> {
   @override
   final Either<ValueFailure<GeneroEnum?>, GeneroEnum> value;
 
-  factory Genero(GeneroEnum input) {
-    return Genero._(right(input));
+  factory Genero(GeneroEnum? input) {
+    if (input == null) {
+      return Genero.empty();
+    } else {
+      return Genero._(right(input));
+    }
   }
 
   factory Genero.empty() {
@@ -308,7 +312,9 @@ class Conjuge extends ValueObject<String?> {
 
   factory Conjuge(String? input) {
     if (input == null) {
-      return Conjuge._(right(null));
+      return Conjuge._(
+        right(null),
+      );
     } else {
       return Conjuge._(
         validateMaxStringLength(input, maxLength)
@@ -327,6 +333,8 @@ class Conjuge extends ValueObject<String?> {
 class PortadorDeNecessidadesEspeciais extends ValueObject<bool> {
   @override
   final Either<ValueFailure<bool>, bool> value;
+
+  int? get maxLength => null;
 
   factory PortadorDeNecessidadesEspeciais(bool input) {
     return PortadorDeNecessidadesEspeciais._(right(input));
@@ -360,12 +368,16 @@ class NecessidadesEspeciais extends ValueObject<String?> {
     return NecessidadesEspeciais('');
   }
 
-  const NecessidadesEspeciais._(this.value);
+  const NecessidadesEspeciais._(
+    this.value,
+  );
 }
 
 class TemParentesNaEmpresa extends ValueObject<bool> {
   @override
   final Either<ValueFailure<bool>, bool> value;
+
+  int? get maxLength => null;
 
   factory TemParentesNaEmpresa(bool input) {
     return TemParentesNaEmpresa._(right(input));
@@ -386,7 +398,9 @@ class NomeDoParente extends ValueObject<String?> {
 
   factory NomeDoParente(String? input) {
     if (input == null) {
-      return NomeDoParente._(right(null));
+      return NomeDoParente._(
+        right(null),
+      );
     } else {
       return NomeDoParente._(
         validateMaxStringLength(input, maxLength)
@@ -399,7 +413,9 @@ class NomeDoParente extends ValueObject<String?> {
     return NomeDoParente('');
   }
 
-  const NomeDoParente._(this.value);
+  const NomeDoParente._(
+    this.value,
+  );
 }
 
 class TipoDeParentesco extends ValueObject<String?> {
@@ -410,7 +426,9 @@ class TipoDeParentesco extends ValueObject<String?> {
 
   factory TipoDeParentesco(String? input) {
     if (input == null) {
-      return TipoDeParentesco._(right(null));
+      return TipoDeParentesco._(
+        right(null),
+      );
     } else {
       return TipoDeParentesco._(
         validateMaxStringLength(input, maxLength)
@@ -420,7 +438,9 @@ class TipoDeParentesco extends ValueObject<String?> {
   }
 
   factory TipoDeParentesco.empty() {
-    return TipoDeParentesco('');
+    return TipoDeParentesco(
+      '',
+    );
   }
 
   const TipoDeParentesco._(this.value);
@@ -449,7 +469,9 @@ class NomesDasPessoasConhecidas extends ValueObject<String?> {
 
   factory NomesDasPessoasConhecidas(String? input) {
     if (input == null) {
-      return NomesDasPessoasConhecidas._(right(null));
+      return NomesDasPessoasConhecidas._(
+        right(null),
+      );
     } else {
       return NomesDasPessoasConhecidas._(
         validateMaxStringLength(input, maxLength)
@@ -459,10 +481,14 @@ class NomesDasPessoasConhecidas extends ValueObject<String?> {
   }
 
   factory NomesDasPessoasConhecidas.empty() {
-    return NomesDasPessoasConhecidas('');
+    return NomesDasPessoasConhecidas(
+      '',
+    );
   }
 
-  const NomesDasPessoasConhecidas._(this.value);
+  const NomesDasPessoasConhecidas._(
+    this.value,
+  );
 }
 
 class AutoDescricaoDaPersonalidade extends ValueObject<String> {
