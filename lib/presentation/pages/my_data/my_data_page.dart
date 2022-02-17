@@ -361,13 +361,14 @@ class MyDataForm extends HookConsumerWidget {
                               ),
                               SizedBox(
                                   width: _responsiveWidth(
-                                      containerWidth, 1, 0.49, 0.49),
-                                  child: _buildCategoriasCnh(categoriasCnh)),
+                                      containerWidth, 1, 1, 0.49),
+                                  child: _buildCategoriasCnh(
+                                      context, categoriasCnh)),
                             ],
                           ),
                           SizedBox(
-                              width: _responsiveWidth(
-                                  containerWidth, 1, 0.49, 0.50),
+                              width:
+                                  _responsiveWidth(containerWidth, 1, 1, 0.50),
                               child: _buildVeiculoAutomotorProprio(
                                   veiculoAutomotorProprio)),
                         ],
@@ -839,17 +840,29 @@ class MyDataForm extends HookConsumerWidget {
     );
   }
 
-  Column _buildCategoriasCnh(ValueNotifier<Map<String, bool>> categoriasCnh) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _buildCategoriasCnh(
+      BuildContext context, ValueNotifier<Map<String, bool>> categoriasCnh) {
+    return Wrap(
+      alignment: WrapAlignment.center,
+      spacing: 10.0,
       children: [
-        ...categoriasCnh.value.entries.map<Widget>(
-          (categoria) {
-            return CheckboxListTile(
-              title: Text("Categoria ${categoria.key}"),
-              value: categoria.value,
-              onChanged: (newValue) {
-                categoriasCnh.value[categoria.key] = newValue ?? false;
+        ...const <Map<String, Widget>>[
+          {'A': FaIcon(FontAwesomeIcons.motorcycle, size: 18.0)},
+          {'B': FaIcon(FontAwesomeIcons.carSide, size: 18.0)},
+          {'C': FaIcon(FontAwesomeIcons.truck, size: 18.0)},
+          {'D': FaIcon(FontAwesomeIcons.bus, size: 18.0)},
+          {'E': FaIcon(FontAwesomeIcons.truck, size: 18.0)},
+        ].map<Widget>(
+          (value) {
+            final categoria = value.entries.first;
+            return ChoiceChip(
+              label: Text("Categoria ${categoria.key}"),
+              avatar: categoria.value,
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              selectedColor: Theme.of(context).primaryColorLight,
+              selected: categoriasCnh.value[categoria.key] ?? false,
+              onSelected: (value) {
+                categoriasCnh.value[categoria.key] = value;
                 categoriasCnh
                     .notifyListeners(); // Tem que chamar notifyListeners senão a UI não é atualizada
               },
