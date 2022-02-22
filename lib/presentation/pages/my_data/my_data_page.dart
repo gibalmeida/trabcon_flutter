@@ -198,6 +198,19 @@ class MyDataForm extends HookConsumerWidget {
       }
     }
 
+    onPhotoTap() async {
+      _showImageSourceActionSheet(context, (photoFromGallery) async {
+        final imageFile = await Utils.pickPhoto(
+          fromGallery: photoFromGallery,
+          cropImage: cropImage,
+        );
+        if (imageFile != null) {
+          _uploadPhotoToFirebase(imageFile)
+              .then((value) => photoUrl.value = value);
+        }
+      });
+    }
+
     ref.listen<CustomException?>(myDataExceptionProvider,
         (previousException, nextException) {
       if (previousException != nextException && nextException != null) {
@@ -270,36 +283,25 @@ class MyDataForm extends HookConsumerWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Container(
-                                      width: 96.0,
-                                      height: 96.0,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.grey.shade400,
-                                        image: DecorationImage(
-                                          fit: BoxFit.fill,
-                                          image: NetworkImage(
-                                              photoUrl.value ?? ''),
+                                    InkWell(
+                                      child: Container(
+                                        width: 96.0,
+                                        height: 96.0,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.grey.shade400,
+                                          image: DecorationImage(
+                                            fit: BoxFit.fill,
+                                            image: NetworkImage(
+                                                photoUrl.value ?? ''),
+                                          ),
                                         ),
                                       ),
+                                      onTap: onPhotoTap,
                                     ),
                                     TextButton(
                                       //TODO: Implementar um image picker para a Web
-                                      onPressed: () async {
-                                        _showImageSourceActionSheet(context,
-                                            (photoFromGallery) async {
-                                          final imageFile =
-                                              await Utils.pickPhoto(
-                                            fromGallery: photoFromGallery,
-                                            cropImage: cropImage,
-                                          );
-                                          if (imageFile != null) {
-                                            _uploadPhotoToFirebase(imageFile)
-                                                .then((value) =>
-                                                    photoUrl.value = value);
-                                          }
-                                        });
-                                      },
+                                      onPressed: onPhotoTap,
                                       child: candidato.photoUrl == null
                                           ? const Text('Enviar foto')
                                           : const Text('Modificar foto'),
