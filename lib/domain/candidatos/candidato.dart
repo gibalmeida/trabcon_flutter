@@ -41,6 +41,7 @@ class Candidato with _$Candidato {
     required TwitterUrl twitterUrl,
     required LinkedInUrl linkedInUrl,
     required GitHubUrl gitHubUrl,
+    String? photoUrl,
   }) = _Data;
 
   factory Candidato.empty() => _Data(
@@ -230,6 +231,10 @@ class Candidato with _$Candidato {
 
   Candidato updateGitHubUrl(String input) {
     return copyWith(gitHubUrl: GitHubUrl(input));
+  }
+
+  Candidato updatePhotoUrl(String? input) {
+    return copyWith(photoUrl: input);
   }
 
   bool isValid() {

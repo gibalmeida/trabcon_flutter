@@ -50,6 +50,10 @@ dependencies:
   firebase_auth: ^3.3.6
   flutterfire_ui: ^0.3.2
   cloud_firestore: ^3.1.7
+  image_picker: ^0.8.4+9
+  image_cropper: ^1.4.1
+  firebase_storage: ^10.2.7
+  responsive_framework: ^0.1.7
 
 dev_dependencies:
   flutter_test:

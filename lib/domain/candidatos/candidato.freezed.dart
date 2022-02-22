@@ -50,7 +50,8 @@ class _$CandidatoTearOff {
       required InstagramUrl instagramUrl,
       required TwitterUrl twitterUrl,
       required LinkedInUrl linkedInUrl,
-      required GitHubUrl gitHubUrl}) {
+      required GitHubUrl gitHubUrl,
+      String? photoUrl}) {
     return _Data(
       id: id,
       nomeCompleto: nomeCompleto,
@@ -84,6 +85,7 @@ class _$CandidatoTearOff {
       twitterUrl: twitterUrl,
       linkedInUrl: linkedInUrl,
       gitHubUrl: gitHubUrl,
+      photoUrl: photoUrl,
     );
   }
 }
@@ -135,6 +137,7 @@ mixin _$Candidato {
   TwitterUrl get twitterUrl => throw _privateConstructorUsedError;
   LinkedInUrl get linkedInUrl => throw _privateConstructorUsedError;
   GitHubUrl get gitHubUrl => throw _privateConstructorUsedError;
+  String? get photoUrl => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CandidatoCopyWith<Candidato> get copyWith =>
@@ -177,7 +180,8 @@ abstract class $CandidatoCopyWith<$Res> {
       InstagramUrl instagramUrl,
       TwitterUrl twitterUrl,
       LinkedInUrl linkedInUrl,
-      GitHubUrl gitHubUrl});
+      GitHubUrl gitHubUrl,
+      String? photoUrl});
 }
 
 /// @nodoc
@@ -222,6 +226,7 @@ class _$CandidatoCopyWithImpl<$Res> implements $CandidatoCopyWith<$Res> {
     Object? twitterUrl = freezed,
     Object? linkedInUrl = freezed,
     Object? gitHubUrl = freezed,
+    Object? photoUrl = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -354,6 +359,10 @@ class _$CandidatoCopyWithImpl<$Res> implements $CandidatoCopyWith<$Res> {
           ? _value.gitHubUrl
           : gitHubUrl // ignore: cast_nullable_to_non_nullable
               as GitHubUrl,
+      photoUrl: photoUrl == freezed
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -395,7 +404,8 @@ abstract class _$DataCopyWith<$Res> implements $CandidatoCopyWith<$Res> {
       InstagramUrl instagramUrl,
       TwitterUrl twitterUrl,
       LinkedInUrl linkedInUrl,
-      GitHubUrl gitHubUrl});
+      GitHubUrl gitHubUrl,
+      String? photoUrl});
 }
 
 /// @nodoc
@@ -441,6 +451,7 @@ class __$DataCopyWithImpl<$Res> extends _$CandidatoCopyWithImpl<$Res>
     Object? twitterUrl = freezed,
     Object? linkedInUrl = freezed,
     Object? gitHubUrl = freezed,
+    Object? photoUrl = freezed,
   }) {
     return _then(_Data(
       id: id == freezed
@@ -573,6 +584,10 @@ class __$DataCopyWithImpl<$Res> extends _$CandidatoCopyWithImpl<$Res>
           ? _value.gitHubUrl
           : gitHubUrl // ignore: cast_nullable_to_non_nullable
               as GitHubUrl,
+      photoUrl: photoUrl == freezed
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -612,7 +627,8 @@ class _$_Data extends _Data {
       required this.instagramUrl,
       required this.twitterUrl,
       required this.linkedInUrl,
-      required this.gitHubUrl})
+      required this.gitHubUrl,
+      this.photoUrl})
       : super._();
 
   @override
@@ -679,10 +695,12 @@ class _$_Data extends _Data {
   final LinkedInUrl linkedInUrl;
   @override
   final GitHubUrl gitHubUrl;
+  @override
+  final String? photoUrl;
 
   @override
   String toString() {
-    return 'Candidato(id: $id, nomeCompleto: $nomeCompleto, dataDeNascimento: $dataDeNascimento, genero: $genero, profissao: $profissao, endereco: $endereco, bairro: $bairro, cidade: $cidade, uf: $uf, cep: $cep, telefonePrincipal: $telefonePrincipal, telefoneAlternativo: $telefoneAlternativo, categoriasCnh: $categoriasCnh, veiculoAutomotorProprio: $veiculoAutomotorProprio, estadoCivil: $estadoCivil, numeroDeFilhos: $numeroDeFilhos, conjuge: $conjuge, portadorDeNecessidadesEspeciais: $portadorDeNecessidadesEspeciais, necessidadesEspeciais: $necessidadesEspeciais, temParentesNaEmpresa: $temParentesNaEmpresa, nomeDoParente: $nomeDoParente, tipoDeParentesco: $tipoDeParentesco, temConhecidosNaEmpresa: $temConhecidosNaEmpresa, nomesDasPessoasConhecidas: $nomesDasPessoasConhecidas, autoDescricaoDaPersonalidade: $autoDescricaoDaPersonalidade, motivacaoParaTrabalharNaEmpresa: $motivacaoParaTrabalharNaEmpresa, outrasInformacoesPessoais: $outrasInformacoesPessoais, facebookUrl: $facebookUrl, instagramUrl: $instagramUrl, twitterUrl: $twitterUrl, linkedInUrl: $linkedInUrl, gitHubUrl: $gitHubUrl)';
+    return 'Candidato(id: $id, nomeCompleto: $nomeCompleto, dataDeNascimento: $dataDeNascimento, genero: $genero, profissao: $profissao, endereco: $endereco, bairro: $bairro, cidade: $cidade, uf: $uf, cep: $cep, telefonePrincipal: $telefonePrincipal, telefoneAlternativo: $telefoneAlternativo, categoriasCnh: $categoriasCnh, veiculoAutomotorProprio: $veiculoAutomotorProprio, estadoCivil: $estadoCivil, numeroDeFilhos: $numeroDeFilhos, conjuge: $conjuge, portadorDeNecessidadesEspeciais: $portadorDeNecessidadesEspeciais, necessidadesEspeciais: $necessidadesEspeciais, temParentesNaEmpresa: $temParentesNaEmpresa, nomeDoParente: $nomeDoParente, tipoDeParentesco: $tipoDeParentesco, temConhecidosNaEmpresa: $temConhecidosNaEmpresa, nomesDasPessoasConhecidas: $nomesDasPessoasConhecidas, autoDescricaoDaPersonalidade: $autoDescricaoDaPersonalidade, motivacaoParaTrabalharNaEmpresa: $motivacaoParaTrabalharNaEmpresa, outrasInformacoesPessoais: $outrasInformacoesPessoais, facebookUrl: $facebookUrl, instagramUrl: $instagramUrl, twitterUrl: $twitterUrl, linkedInUrl: $linkedInUrl, gitHubUrl: $gitHubUrl, photoUrl: $photoUrl)';
   }
 
   @override
@@ -746,7 +764,8 @@ class _$_Data extends _Data {
                 .equals(other.twitterUrl, twitterUrl) &&
             const DeepCollectionEquality()
                 .equals(other.linkedInUrl, linkedInUrl) &&
-            const DeepCollectionEquality().equals(other.gitHubUrl, gitHubUrl));
+            const DeepCollectionEquality().equals(other.gitHubUrl, gitHubUrl) &&
+            const DeepCollectionEquality().equals(other.photoUrl, photoUrl));
   }
 
   @override
@@ -783,7 +802,8 @@ class _$_Data extends _Data {
         const DeepCollectionEquality().hash(instagramUrl),
         const DeepCollectionEquality().hash(twitterUrl),
         const DeepCollectionEquality().hash(linkedInUrl),
-        const DeepCollectionEquality().hash(gitHubUrl)
+        const DeepCollectionEquality().hash(gitHubUrl),
+        const DeepCollectionEquality().hash(photoUrl)
       ]);
 
   @JsonKey(ignore: true)
@@ -825,7 +845,8 @@ abstract class _Data extends Candidato {
       required InstagramUrl instagramUrl,
       required TwitterUrl twitterUrl,
       required LinkedInUrl linkedInUrl,
-      required GitHubUrl gitHubUrl}) = _$_Data;
+      required GitHubUrl gitHubUrl,
+      String? photoUrl}) = _$_Data;
   const _Data._() : super._();
 
   @override
@@ -892,6 +913,8 @@ abstract class _Data extends Candidato {
   LinkedInUrl get linkedInUrl;
   @override
   GitHubUrl get gitHubUrl;
+  @override
+  String? get photoUrl;
   @override
   @JsonKey(ignore: true)
   _$DataCopyWith<_Data> get copyWith => throw _privateConstructorUsedError;

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:trabcon_flutter/domain/candidatos/candidatos_failure.dart';
 import 'package:trabcon_flutter/domain/candidatos/candidato.dart';
@@ -17,11 +16,9 @@ class CandidatoRepository implements ICandidatosRepository {
 
   @override
   Future<Either<CandidatosFailure, Unit>> createOrUpdate(
-      Candidato candidato) async {
+      {required String userId, required Candidato candidato}) async {
     try {
-      await candidatosRef
-          .doc(_userId())
-          .set(CandidatoDto.fromDomain(candidato));
+      await candidatosRef.doc(userId).set(CandidatoDto.fromDomain(candidato));
 
       return right(unit);
     } on PlatformException catch (_) {
@@ -42,21 +39,14 @@ class CandidatoRepository implements ICandidatosRepository {
   }
 
   @override
-  Future<Either<CandidatosFailure, Option<Candidato>>> fetchCandidato() async {
-    final snapshot = await candidatosRef.doc(_userId()).get();
+  Future<Either<CandidatosFailure, Option<Candidato>>> fetchCandidato(
+      String userId) async {
+    final snapshot = await candidatosRef.doc(userId).get();
 
     if (snapshot.exists && snapshot.data() != null) {
       return right(some(snapshot.data()!.toDomain()));
     } else {
       return right(none());
     }
-  }
-
-  String _userId() {
-    String? uid = FirebaseAuth.instance.currentUser?.uid;
-    if (uid == null) {
-      throw Exception('O usuário deveria estar autenticado!');
-    }
-    return uid;
   }
 }

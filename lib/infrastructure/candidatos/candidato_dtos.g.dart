@@ -43,6 +43,7 @@ _$_CandidatoDto _$$_CandidatoDtoFromJson(Map<String, dynamic> json) =>
       twitterUrl: json['twitterUrl'] as String?,
       linkedInUrl: json['linkedInUrl'] as String?,
       gitHubUrl: json['gitHubUrl'] as String?,
+      photoUrl: json['photoUrl'] as String?,
     );
 
 Map<String, dynamic> _$$_CandidatoDtoToJson(_$_CandidatoDto instance) =>
@@ -81,6 +82,7 @@ Map<String, dynamic> _$$_CandidatoDtoToJson(_$_CandidatoDto instance) =>
       'twitterUrl': instance.twitterUrl,
       'linkedInUrl': instance.linkedInUrl,
       'gitHubUrl': instance.gitHubUrl,
+      'photoUrl': instance.photoUrl,
     };
 
 const _$GeneroEnumEnumMap = {

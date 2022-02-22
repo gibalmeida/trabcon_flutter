@@ -42,6 +42,7 @@ class CandidatoDto with _$CandidatoDto {
     String? twitterUrl,
     String? linkedInUrl,
     String? gitHubUrl,
+    String? photoUrl,
   }) = _CandidatoDto;
 
   factory CandidatoDto.fromJson(Map<String, dynamic> json) =>
@@ -86,6 +87,7 @@ class CandidatoDto with _$CandidatoDto {
       twitterUrl: candidato.twitterUrl.getOrCrash(),
       linkedInUrl: candidato.linkedInUrl.getOrCrash(),
       gitHubUrl: candidato.gitHubUrl.getOrCrash(),
+      photoUrl: candidato.photoUrl,
     );
   }
 
@@ -130,6 +132,7 @@ class CandidatoDto with _$CandidatoDto {
       twitterUrl: TwitterUrl(twitterUrl ?? ''),
       linkedInUrl: LinkedInUrl(linkedInUrl ?? ''),
       gitHubUrl: GitHubUrl(gitHubUrl ?? ''),
+      photoUrl: photoUrl,
     );
   }
 }

@@ -43,5 +43,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>É necessário para que você possa nos enviar uma foto sua.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>É necessário para que você possa nos enviar uma foto sua.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>É necessário para que você possa nos enviar um áudio.</string>
 </dict>
 </plist>
