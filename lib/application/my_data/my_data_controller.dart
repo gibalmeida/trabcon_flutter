@@ -1,5 +1,11 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:trabcon_flutter/application/auth/auth_controller.dart';
 import 'package:trabcon_flutter/domain/auth/custom_exception.dart';
@@ -64,14 +70,48 @@ class MyDataController extends StateNotifier<AsyncValue<Candidato>> {
 
   Future<String?> fetchPhotoUrl() async {
     try {
-      return await FirebaseStorage.instance
-          .ref('photos/${_user!.uid}.jpg')
+      return await firebase_storage.FirebaseStorage.instance
+          .ref('candidato_photos/${_user!.uid}')
           .getDownloadURL();
-    } on FirebaseException catch (e) {
+    } on firebase_storage.FirebaseException catch (e) {
       if (e.code == 'object-not-found') {
         return null;
       }
     }
     return null;
+  }
+
+  Future<void> uploadPhoto(XFile imageFile) async {
+    // final ext = extension(imageFile.path);
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    final fileName = uid; //basename(imageFile.path);
+
+    try {
+      final firebase_storage.UploadTask uploadTask;
+      firebase_storage.Reference firebaseStorageRef = firebase_storage
+          .FirebaseStorage.instance
+          .ref()
+          .child('candidato_photos')
+          .child(fileName);
+
+      // if (kIsWeb) {
+      uploadTask = firebaseStorageRef.putData(await imageFile.readAsBytes(),
+          firebase_storage.SettableMetadata(contentType: imageFile.mimeType));
+      // } else {
+      //   uploadTask = firebaseStorageRef.putFile(File(imageFile.path));
+      // }
+
+      firebase_storage.TaskSnapshot taskSnapshot = await uploadTask;
+      final photoUrl = await taskSnapshot.ref.getDownloadURL();
+      state =
+          state.whenData((candidato) => candidato.copyWith(photoUrl: photoUrl));
+      print(state);
+    } on firebase_storage.FirebaseException catch (e) {
+      if (e.code == 'permission-denied') {
+        _read(myDataExceptionProvider.state).state = const CustomException(
+            message:
+                'O usuário não tem permissão para fazer upload para esta referência.');
+      }
+    }
   }
 }

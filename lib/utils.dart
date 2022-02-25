@@ -1,29 +1,68 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 const smallScreenWidth = 640.0;
 const mediumScreenWidth = 1007.0;
 
 class Utils {
-  static Future<File?> pickPhoto({
+  static Future<void> pickPhoto({
     required fromGallery,
-    Future<File?> Function(File file)? cropImage,
+    void Function(XFile file)? cropImage,
+    // Future<void> Function(XFile file)? uploadImage,
   }) async {
     final ImagePicker _picker = ImagePicker();
     final XFile? pickedFile = await _picker.pickImage(
         source: fromGallery ? ImageSource.gallery : ImageSource.camera);
 
     if (pickedFile == null) {
-      return null;
+      return;
     }
 
-    if (cropImage == null) {
-      return File(pickedFile.path);
-    } else {
-      return cropImage(File(pickedFile.path));
+    if (cropImage != null) {
+      cropImage(pickedFile);
+      //   cropImage(pickedFile).then((croppedFile) =>
+      //       croppedFile != null && uploadImage != null
+      //           ? uploadImage(croppedFile)
+      //           : null);
+      // } else if (uploadImage != null) {
+      //   uploadImage(pickedFile);
     }
   }
+
+  static Future<XFile?> cropImage(XFile imageFile) async {
+    final croppedFile = await ImageCropper.cropImage(
+      sourcePath: imageFile.path,
+      aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+      aspectRatioPresets: [CropAspectRatioPreset.square],
+      compressQuality: 70,
+      compressFormat: ImageCompressFormat.jpg,
+      androidUiSettings: androidUiSettingsLocked(),
+      iosUiSettings: iosUiSettingsLocked(),
+      cropStyle: CropStyle.circle,
+    );
+
+    if (croppedFile != null) {
+      return XFile(croppedFile.path);
+    }
+
+    return null;
+  }
+
+  static IOSUiSettings iosUiSettingsLocked() => const IOSUiSettings(
+        rotateClockwiseButtonHidden: false,
+        rotateButtonsHidden: false,
+      );
+
+  static AndroidUiSettings androidUiSettingsLocked() => const AndroidUiSettings(
+        toolbarTitle: 'Ajustar a Foto',
+        toolbarColor:
+            Colors.red, //TODO: Ajustar cores para o tema que for definido
+        toolbarWidgetColor: Colors.white,
+        hideBottomControls: false,
+      );
 
   /// Returns the optimal width size for the width available in the container.
   ///

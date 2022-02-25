@@ -41,7 +41,9 @@ class CandidatoRepository implements ICandidatosRepository {
   @override
   Future<Either<CandidatosFailure, Option<Candidato>>> fetchCandidato(
       String userId) async {
-    final snapshot = await candidatosRef.doc(userId).get();
+    final snapshot = await candidatosRef
+        .doc(userId)
+        .get(); // TODO: Quando a conexão com a internet cai está dando um erro aqui (tem que colocar um try catch)
 
     if (snapshot.exists && snapshot.data() != null) {
       return right(some(snapshot.data()!.toDomain()));

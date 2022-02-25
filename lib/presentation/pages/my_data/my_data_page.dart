@@ -1,16 +1,16 @@
 import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:path/path.dart';
+import 'package:flutter/foundation.dart';
 import 'package:brasil_fields/brasil_fields.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:trabcon_flutter/application/auth/auth_controller.dart';
 import 'package:trabcon_flutter/application/my_data/my_data_controller.dart';
 import 'package:trabcon_flutter/domain/auth/custom_exception.dart';
@@ -20,6 +20,7 @@ import 'package:trabcon_flutter/domain/core/value_objects.dart';
 import 'package:trabcon_flutter/domain/candidatos/candidato.dart';
 
 import 'package:intl/intl.dart';
+import 'package:trabcon_flutter/presentation/common/utils/crop_editor_helper.dart';
 import 'package:trabcon_flutter/presentation/pages/auth_gate/auth_gate.dart';
 import 'package:trabcon_flutter/utils.dart';
 
@@ -198,16 +199,21 @@ class MyDataForm extends HookConsumerWidget {
       }
     }
 
-    onPhotoTap() async {
-      _showImageSourceActionSheet(context, (photoFromGallery) async {
-        final imageFile = await Utils.pickPhoto(
+    onPhotoTap() {
+      _showImageSourceActionSheet(context, (photoFromGallery) {
+        Utils.pickPhoto(
           fromGallery: photoFromGallery,
-          cropImage: cropImage,
+          // cropImage: kIsWeb
+          //     ? (imageFile) => PhotoEditor.show(context, imageFile.path)
+          //     : Utils.cropImage,
+          cropImage: (
+            imageFile,
+          ) =>
+              PhotoEditor.show(context, imageFile,
+                  ref.read(myDataControllerProvider.notifier).uploadPhoto),
+
+          // uploadImage: ref.read(myDataControllerProvider.notifier).uploadPhoto,
         );
-        if (imageFile != null) {
-          _uploadPhotoToFirebase(imageFile)
-              .then((value) => photoUrl.value = value);
-        }
       });
     }
 
@@ -223,435 +229,440 @@ class MyDataForm extends HookConsumerWidget {
       }
     });
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Meu dados"),
-        actions: [
-          IconButton(
-            // TODO: Esse botão vai sair daqui e vai para menu de gaveta
-            onPressed: () {
-              ref.read(authControllerProvider.notifier).signOut();
-            },
-            icon: const Icon(
-              Icons.logout_outlined,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Meu dados"),
+          actions: [
+            IconButton(
+              // TODO: Esse botão vai sair daqui e vai para menu de gaveta
+              onPressed: () {
+                ref.read(authControllerProvider.notifier).signOut();
+              },
+              icon: const Icon(
+                Icons.logout_outlined,
+              ),
             ),
-          ),
-          MediaQuery.of(context).size.width < smallScreenWidth
-              ? IconButton(
-                  onPressed: onPressedSaveButton,
-                  icon: const Icon(Icons.save),
-                )
-              : ElevatedButton.icon(
-                  onPressed: onPressedSaveButton,
-                  icon: const Icon(Icons.save),
-                  label: const Text('Salvar'),
-                ),
-        ],
-      ),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          return Form(
-            key: _formKey,
-            child: SingleChildScrollView(
-              child: Center(
-                child: Container(
-                  padding:
-                      const EdgeInsets.only(top: 16.0, left: 4.0, right: 4.0),
-                  // color: Colors.grey.shade200,
-                  width: constraints.maxWidth > 1024 ? 1024 : double.infinity,
-                  child: LayoutBuilder(builder: (context, contraints) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        // TODO: melhor texto e botão
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(top: 16.0, bottom: 16.0),
-                          child: Wrap(
-                            direction: Axis.horizontal,
-                            alignment: constraints.maxWidth <= 740
-                                ? WrapAlignment.center
-                                : WrapAlignment.spaceBetween,
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            spacing: 10.0,
-                            children: [
-                              ConstrainedBox(
-                                constraints:
-                                    const BoxConstraints(minWidth: 128.0),
-                                child: Column(
-                                  // Foto e botão para enviar a foto
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    InkWell(
-                                      child: Container(
-                                        width: 96.0,
-                                        height: 96.0,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.grey.shade400,
-                                          image: DecorationImage(
-                                            fit: BoxFit.fill,
-                                            image: NetworkImage(
-                                                photoUrl.value ?? ''),
+            MediaQuery.of(context).size.width < smallScreenWidth
+                ? IconButton(
+                    onPressed: onPressedSaveButton,
+                    icon: const Icon(Icons.save),
+                  )
+                : ElevatedButton.icon(
+                    onPressed: onPressedSaveButton,
+                    icon: const Icon(Icons.save),
+                    label: const Text('Salvar'),
+                  ),
+          ],
+        ),
+        body: LayoutBuilder(
+          builder: (context, constraints) {
+            return Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                child: Center(
+                  child: Container(
+                    padding:
+                        const EdgeInsets.only(top: 16.0, left: 4.0, right: 4.0),
+                    // color: Colors.grey.shade200,
+                    width: constraints.maxWidth > 1024 ? 1024 : double.infinity,
+                    child: LayoutBuilder(builder: (context, contraints) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          // TODO: melhor texto e botão
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 16.0, bottom: 16.0),
+                            child: Wrap(
+                              direction: Axis.horizontal,
+                              alignment: constraints.maxWidth <= 740
+                                  ? WrapAlignment.center
+                                  : WrapAlignment.spaceBetween,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              spacing: 10.0,
+                              children: [
+                                ConstrainedBox(
+                                  constraints:
+                                      const BoxConstraints(minWidth: 128.0),
+                                  child: Column(
+                                    // Foto e botão para enviar a foto
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      InkWell(
+                                        child: Container(
+                                          width: 96.0,
+                                          height: 96.0,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.grey.shade400,
+                                            image: DecorationImage(
+                                              fit: BoxFit.fill,
+                                              image: NetworkImage(
+                                                  photoUrl.value ?? ''),
+                                            ),
                                           ),
                                         ),
+                                        onTap: onPhotoTap,
                                       ),
-                                      onTap: onPhotoTap,
-                                    ),
-                                    TextButton(
-                                      //TODO: Implementar um image picker para a Web
-                                      onPressed: onPhotoTap,
-                                      child: candidato.photoUrl == null
-                                          ? const Text('Enviar foto')
-                                          : const Text('Modificar foto'),
-                                    ),
-                                  ],
+                                      TextButton(
+                                        //TODO: Implementar um image picker para a Web
+                                        onPressed: onPhotoTap,
+                                        child: candidato.photoUrl == null
+                                            ? const Text('Enviar foto')
+                                            : const Text('Modificar foto'),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Wrap(
-                                alignment: WrapAlignment.spaceBetween,
-                                spacing: 10.0,
-                                runSpacing: 10.0,
-                                children: [
-                                  FractionallySizedBox(
-                                    widthFactor:
-                                        contraints.maxWidth < smallScreenWidth
-                                            ? 1
-                                            : 0.50,
-                                    child: _buildNomeCompleto(
-                                        nomeCompletoController),
-                                  ),
-                                  FractionallySizedBox(
-                                    widthFactor:
-                                        contraints.maxWidth < smallScreenWidth
-                                            ? 1
-                                            : 0.3,
-                                    child: _buildDataDeNascimento(
-                                        dataDeNascimentoController,
-                                        context,
-                                        dateFormat),
-                                  ),
-                                  FractionallySizedBox(
-                                    widthFactor:
-                                        contraints.maxWidth < smallScreenWidth
-                                            ? 1
-                                            : 0.2,
-                                    child: _buildGenero(genero),
-                                  ),
-                                  FractionallySizedBox(
-                                    widthFactor:
-                                        contraints.maxWidth < smallScreenWidth
-                                            ? 1
-                                            : 0.6,
-                                    child: _buildProfissao(profissaoController),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 16.0),
-                          child: Wrap(
-                            alignment: WrapAlignment.spaceBetween,
-                            spacing: 10.0,
-                            runSpacing: 10.0,
-                            children: [
-                              FractionallySizedBox(
-                                widthFactor:
-                                    contraints.maxWidth < smallScreenWidth
-                                        ? 1
-                                        : 0.49,
-                                child: _buildEndereco(enderecoController),
-                              ),
-                              FractionallySizedBox(
-                                widthFactor:
-                                    contraints.maxWidth < smallScreenWidth
-                                        ? 1
-                                        : 0.49,
-                                child: _buildBairro(bairroController),
-                              ),
-                              FractionallySizedBox(
-                                widthFactor:
-                                    contraints.maxWidth < smallScreenWidth
-                                        ? 1
-                                        : 0.49,
-                                child: _buildCidade(cidadeController),
-                              ),
-                              FractionallySizedBox(
-                                widthFactor:
-                                    contraints.maxWidth < smallScreenWidth
-                                        ? 1
-                                        : 0.33,
-                                child: _buildEstado(uf),
-                              ),
-                              FractionallySizedBox(
-                                widthFactor:
-                                    contraints.maxWidth < smallScreenWidth
-                                        ? 1
-                                        : 0.15,
-                                child: _buildCep(cepController),
-                              )
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 16.0),
-                          child: Wrap(
-                            alignment: WrapAlignment.spaceBetween,
-                            spacing: 10.0,
-                            runSpacing: 10.0,
-                            children: [
-                              FractionallySizedBox(
-                                  widthFactor:
-                                      contraints.maxWidth < smallScreenWidth
-                                          ? 1
-                                          : 0.49,
-                                  child: _buildTelefonePrincipal(
-                                      telefonePrincipalController)),
-                              FractionallySizedBox(
-                                  widthFactor:
-                                      contraints.maxWidth < smallScreenWidth
-                                          ? 1
-                                          : 0.49,
-                                  child: _buildTelefoneAlternativo(
-                                      telefoneAlternativoController)),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 16.0),
-                          child: Wrap(
-                            alignment: WrapAlignment.spaceBetween,
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            spacing: 10.0,
-                            runSpacing: 10.0,
-                            children: [
-                              Column(
-                                children: [
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 14.0),
-                                    child: Text(
-                                      'Marque as categorias da sua CNH',
-                                      style: TextStyle(fontSize: 16),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  FractionallySizedBox(
+                                Wrap(
+                                  alignment: WrapAlignment.spaceBetween,
+                                  spacing: 10.0,
+                                  runSpacing: 10.0,
+                                  children: [
+                                    FractionallySizedBox(
                                       widthFactor:
                                           contraints.maxWidth < smallScreenWidth
                                               ? 1
-                                              : 0.49,
-                                      child: _buildCategoriasCnh(
-                                          context, categoriasCnh)),
-                                ],
-                              ),
-                              FractionallySizedBox(
+                                              : 0.50,
+                                      child: _buildNomeCompleto(
+                                          nomeCompletoController),
+                                    ),
+                                    FractionallySizedBox(
+                                      widthFactor:
+                                          contraints.maxWidth < smallScreenWidth
+                                              ? 1
+                                              : 0.3,
+                                      child: _buildDataDeNascimento(
+                                          dataDeNascimentoController,
+                                          context,
+                                          dateFormat),
+                                    ),
+                                    FractionallySizedBox(
+                                      widthFactor:
+                                          contraints.maxWidth < smallScreenWidth
+                                              ? 1
+                                              : 0.2,
+                                      child: _buildGenero(genero),
+                                    ),
+                                    FractionallySizedBox(
+                                      widthFactor:
+                                          contraints.maxWidth < smallScreenWidth
+                                              ? 1
+                                              : 0.6,
+                                      child:
+                                          _buildProfissao(profissaoController),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0),
+                            child: Wrap(
+                              alignment: WrapAlignment.spaceBetween,
+                              spacing: 10.0,
+                              runSpacing: 10.0,
+                              children: [
+                                FractionallySizedBox(
                                   widthFactor:
                                       contraints.maxWidth < smallScreenWidth
                                           ? 1
                                           : 0.49,
-                                  child: _buildVeiculoAutomotorProprio(
-                                      veiculoAutomotorProprio)),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 16.0),
-                          child: Wrap(
-                            alignment: WrapAlignment.spaceBetween,
-                            spacing: 10.0,
-                            runSpacing: 10.0,
-                            children: [
-                              FractionallySizedBox(
-                                  widthFactor:
-                                      contraints.maxWidth < smallScreenWidth
-                                          ? 1
-                                          : 0.20,
-                                  child: _buildEstadoCivil(estadoCivil)),
-                              FractionallySizedBox(
+                                  child: _buildEndereco(enderecoController),
+                                ),
+                                FractionallySizedBox(
                                   widthFactor:
                                       contraints.maxWidth < smallScreenWidth
                                           ? 1
                                           : 0.49,
-                                  child: _buildConjuge(
-                                      conjugeController, estadoCivil, genero)),
-                              FractionallySizedBox(
+                                  child: _buildBairro(bairroController),
+                                ),
+                                FractionallySizedBox(
                                   widthFactor:
                                       contraints.maxWidth < smallScreenWidth
                                           ? 1
-                                          : 0.28,
-                                  child: _buildNumeroDeFilhos(
-                                      numeroDeFilhosController)),
-                            ],
+                                          : 0.49,
+                                  child: _buildCidade(cidadeController),
+                                ),
+                                FractionallySizedBox(
+                                  widthFactor:
+                                      contraints.maxWidth < smallScreenWidth
+                                          ? 1
+                                          : 0.33,
+                                  child: _buildEstado(uf),
+                                ),
+                                FractionallySizedBox(
+                                  widthFactor:
+                                      contraints.maxWidth < smallScreenWidth
+                                          ? 1
+                                          : 0.15,
+                                  child: _buildCep(cepController),
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 16.0),
-                          child: Wrap(
-                            alignment: WrapAlignment.spaceBetween,
-                            spacing: 10.0,
-                            runSpacing: 10.0,
-                            children: [
-                              FractionallySizedBox(
-                                widthFactor:
-                                    contraints.maxWidth < smallScreenWidth
-                                        ? 1
-                                        : 0.30,
-                                child: _buildPortadorDeNecessidadesEspeciais(
-                                    portadorDeNecessidadesEspeciais),
-                              ),
-                              FractionallySizedBox(
-                                widthFactor:
-                                    contraints.maxWidth < smallScreenWidth
-                                        ? 1
-                                        : 0.68,
-                                child: _buildNecessidadesEspeciais(
-                                    necessidadesEspeciaisController,
-                                    portadorDeNecessidadesEspeciais),
-                              ),
-                            ],
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0),
+                            child: Wrap(
+                              alignment: WrapAlignment.spaceBetween,
+                              spacing: 10.0,
+                              runSpacing: 10.0,
+                              children: [
+                                FractionallySizedBox(
+                                    widthFactor:
+                                        contraints.maxWidth < smallScreenWidth
+                                            ? 1
+                                            : 0.49,
+                                    child: _buildTelefonePrincipal(
+                                        telefonePrincipalController)),
+                                FractionallySizedBox(
+                                    widthFactor:
+                                        contraints.maxWidth < smallScreenWidth
+                                            ? 1
+                                            : 0.49,
+                                    child: _buildTelefoneAlternativo(
+                                        telefoneAlternativoController)),
+                              ],
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 16.0),
-                          child: Wrap(
-                            alignment: WrapAlignment.spaceBetween,
-                            spacing: 10.0,
-                            runSpacing: 10.0,
-                            children: [
-                              FractionallySizedBox(
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0),
+                            child: Wrap(
+                              alignment: WrapAlignment.spaceBetween,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              spacing: 10.0,
+                              runSpacing: 10.0,
+                              children: [
+                                Column(
+                                  children: [
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 14.0),
+                                      child: Text(
+                                        'Marque as categorias da sua CNH',
+                                        style: TextStyle(fontSize: 16),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    FractionallySizedBox(
+                                        widthFactor: contraints.maxWidth <
+                                                smallScreenWidth
+                                            ? 1
+                                            : 0.49,
+                                        child: _buildCategoriasCnh(
+                                            context, categoriasCnh)),
+                                  ],
+                                ),
+                                FractionallySizedBox(
+                                    widthFactor:
+                                        contraints.maxWidth < smallScreenWidth
+                                            ? 1
+                                            : 0.49,
+                                    child: _buildVeiculoAutomotorProprio(
+                                        veiculoAutomotorProprio)),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0),
+                            child: Wrap(
+                              alignment: WrapAlignment.spaceBetween,
+                              spacing: 10.0,
+                              runSpacing: 10.0,
+                              children: [
+                                FractionallySizedBox(
+                                    widthFactor:
+                                        contraints.maxWidth < smallScreenWidth
+                                            ? 1
+                                            : 0.20,
+                                    child: _buildEstadoCivil(estadoCivil)),
+                                FractionallySizedBox(
+                                    widthFactor:
+                                        contraints.maxWidth < smallScreenWidth
+                                            ? 1
+                                            : 0.49,
+                                    child: _buildConjuge(conjugeController,
+                                        estadoCivil, genero)),
+                                FractionallySizedBox(
+                                    widthFactor:
+                                        contraints.maxWidth < smallScreenWidth
+                                            ? 1
+                                            : 0.28,
+                                    child: _buildNumeroDeFilhos(
+                                        numeroDeFilhosController)),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0),
+                            child: Wrap(
+                              alignment: WrapAlignment.spaceBetween,
+                              spacing: 10.0,
+                              runSpacing: 10.0,
+                              children: [
+                                FractionallySizedBox(
                                   widthFactor:
                                       contraints.maxWidth < smallScreenWidth
                                           ? 1
                                           : 0.30,
-                                  child: _buildTemParentesNaEmpresa(
-                                      temParentesNaEmpresa)),
-                              FractionallySizedBox(
-                                widthFactor:
-                                    contraints.maxWidth < smallScreenWidth
-                                        ? 1
-                                        : 0.37,
-                                child: _buildNomeDoParente(
-                                    nomeDoParenteController,
-                                    temParentesNaEmpresa),
-                              ),
-                              FractionallySizedBox(
-                                widthFactor:
-                                    contraints.maxWidth < smallScreenWidth
-                                        ? 1
-                                        : 0.30,
-                                child: _buildTipoDeParentesco(
-                                    tipoDeParentescoController,
-                                    temParentesNaEmpresa),
-                              ),
-                            ],
+                                  child: _buildPortadorDeNecessidadesEspeciais(
+                                      portadorDeNecessidadesEspeciais),
+                                ),
+                                FractionallySizedBox(
+                                  widthFactor:
+                                      contraints.maxWidth < smallScreenWidth
+                                          ? 1
+                                          : 0.68,
+                                  child: _buildNecessidadesEspeciais(
+                                      necessidadesEspeciaisController,
+                                      portadorDeNecessidadesEspeciais),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 16.0),
-                          child: Wrap(
-                            alignment: WrapAlignment.spaceBetween,
-                            spacing: 10.0,
-                            runSpacing: 10.0,
-                            children: [
-                              FractionallySizedBox(
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0),
+                            child: Wrap(
+                              alignment: WrapAlignment.spaceBetween,
+                              spacing: 10.0,
+                              runSpacing: 10.0,
+                              children: [
+                                FractionallySizedBox(
+                                    widthFactor:
+                                        contraints.maxWidth < smallScreenWidth
+                                            ? 1
+                                            : 0.30,
+                                    child: _buildTemParentesNaEmpresa(
+                                        temParentesNaEmpresa)),
+                                FractionallySizedBox(
+                                  widthFactor:
+                                      contraints.maxWidth < smallScreenWidth
+                                          ? 1
+                                          : 0.37,
+                                  child: _buildNomeDoParente(
+                                      nomeDoParenteController,
+                                      temParentesNaEmpresa),
+                                ),
+                                FractionallySizedBox(
                                   widthFactor:
                                       contraints.maxWidth < smallScreenWidth
                                           ? 1
                                           : 0.30,
-                                  child: _buildTemConhecidosNaEmpresa(
-                                      temConhecidosNaEmpresa)),
-                              FractionallySizedBox(
-                                widthFactor:
-                                    contraints.maxWidth < smallScreenWidth
-                                        ? 1
-                                        : 0.68,
-                                child: _buildNomesDasPessoasConhecidas(
-                                    nomesDasPessoasConhecidasController,
-                                    temConhecidosNaEmpresa),
-                              ),
-                            ],
+                                  child: _buildTipoDeParentesco(
+                                      tipoDeParentescoController,
+                                      temParentesNaEmpresa),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 16.0),
-                          child: Wrap(
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0),
+                            child: Wrap(
+                              alignment: WrapAlignment.spaceBetween,
+                              spacing: 10.0,
+                              runSpacing: 10.0,
+                              children: [
+                                FractionallySizedBox(
+                                    widthFactor:
+                                        contraints.maxWidth < smallScreenWidth
+                                            ? 1
+                                            : 0.30,
+                                    child: _buildTemConhecidosNaEmpresa(
+                                        temConhecidosNaEmpresa)),
+                                FractionallySizedBox(
+                                  widthFactor:
+                                      contraints.maxWidth < smallScreenWidth
+                                          ? 1
+                                          : 0.68,
+                                  child: _buildNomesDasPessoasConhecidas(
+                                      nomesDasPessoasConhecidasController,
+                                      temConhecidosNaEmpresa),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0),
+                            child: Wrap(
+                              alignment: WrapAlignment.spaceBetween,
+                              spacing: 10.0,
+                              runSpacing: 10.0,
+                              children: [
+                                _buildAutoDescricaoDaPersonalidade(
+                                    autoDescricaoDaPersonalidadeController),
+                                FractionallySizedBox(
+                                  widthFactor:
+                                      contraints.maxWidth < smallScreenWidth
+                                          ? 1
+                                          : 0.49,
+                                  child: _buildMotivoParaTrabalharNaEmpresa(
+                                      motivacaoParaTrabalharNaEmpresaController),
+                                ),
+                                FractionallySizedBox(
+                                    widthFactor:
+                                        contraints.maxWidth < smallScreenWidth
+                                            ? 1
+                                            : 0.49,
+                                    child: _buildOutrasInformacoes(
+                                        outrasInformacoesPessoaisController)),
+                              ],
+                            ),
+                          ),
+                          Wrap(
                             alignment: WrapAlignment.spaceBetween,
                             spacing: 10.0,
                             runSpacing: 10.0,
                             children: [
-                              _buildAutoDescricaoDaPersonalidade(
-                                  autoDescricaoDaPersonalidadeController),
-                              FractionallySizedBox(
-                                widthFactor:
-                                    contraints.maxWidth < smallScreenWidth
-                                        ? 1
-                                        : 0.49,
-                                child: _buildMotivoParaTrabalharNaEmpresa(
-                                    motivacaoParaTrabalharNaEmpresaController),
-                              ),
                               FractionallySizedBox(
                                   widthFactor:
                                       contraints.maxWidth < smallScreenWidth
                                           ? 1
                                           : 0.49,
-                                  child: _buildOutrasInformacoes(
-                                      outrasInformacoesPessoaisController)),
+                                  child:
+                                      _buildFacebookUrl(facebookUrlController)),
+                              FractionallySizedBox(
+                                  widthFactor:
+                                      contraints.maxWidth < smallScreenWidth
+                                          ? 1
+                                          : 0.49,
+                                  child: _buildInstagramUrl(
+                                      instagramUrlController)),
+                              FractionallySizedBox(
+                                  widthFactor:
+                                      contraints.maxWidth < smallScreenWidth
+                                          ? 1
+                                          : 0.49,
+                                  child:
+                                      _buildTwitterUrl(twitterUrlController)),
+                              FractionallySizedBox(
+                                  widthFactor:
+                                      contraints.maxWidth < smallScreenWidth
+                                          ? 1
+                                          : 0.49,
+                                  child:
+                                      _buildLinkedInUrl(linkedInUrlController)),
+                              FractionallySizedBox(
+                                  widthFactor:
+                                      contraints.maxWidth < smallScreenWidth
+                                          ? 1
+                                          : 0.49,
+                                  child: _buildGitHubUrl(gitHubUrlController)),
                             ],
                           ),
-                        ),
-                        Wrap(
-                          alignment: WrapAlignment.spaceBetween,
-                          spacing: 10.0,
-                          runSpacing: 10.0,
-                          children: [
-                            FractionallySizedBox(
-                                widthFactor:
-                                    contraints.maxWidth < smallScreenWidth
-                                        ? 1
-                                        : 0.49,
-                                child:
-                                    _buildFacebookUrl(facebookUrlController)),
-                            FractionallySizedBox(
-                                widthFactor:
-                                    contraints.maxWidth < smallScreenWidth
-                                        ? 1
-                                        : 0.49,
-                                child:
-                                    _buildInstagramUrl(instagramUrlController)),
-                            FractionallySizedBox(
-                                widthFactor:
-                                    contraints.maxWidth < smallScreenWidth
-                                        ? 1
-                                        : 0.49,
-                                child: _buildTwitterUrl(twitterUrlController)),
-                            FractionallySizedBox(
-                                widthFactor:
-                                    contraints.maxWidth < smallScreenWidth
-                                        ? 1
-                                        : 0.49,
-                                child:
-                                    _buildLinkedInUrl(linkedInUrlController)),
-                            FractionallySizedBox(
-                                widthFactor:
-                                    contraints.maxWidth < smallScreenWidth
-                                        ? 1
-                                        : 0.49,
-                                child: _buildGitHubUrl(gitHubUrlController)),
-                          ],
-                        ),
-                      ],
-                    );
-                  }),
+                        ],
+                      );
+                    }),
+                  ),
                 ),
               ),
-            ),
-          );
-          // }
-        },
+            );
+            // }
+          },
+        ),
       ),
     );
   }
@@ -1230,35 +1241,13 @@ class MyDataForm extends HookConsumerWidget {
     return pickedDate;
   }
 
-  Future<String?> _uploadPhotoToFirebase(File imageFile) async {
-    final ext = extension(imageFile.path);
-    final uid = FirebaseAuth.instance.currentUser!.uid;
-    final fileName = uid + ext; //basename(imageFile.path);
-
-    try {
-      firebase_storage.Reference firebaseStorageRef = firebase_storage
-          .FirebaseStorage.instance
-          .ref()
-          .child('photos')
-          .child(fileName);
-      firebase_storage.UploadTask uploadTask =
-          firebaseStorageRef.putFile(imageFile);
-      firebase_storage.TaskSnapshot taskSnapshot = await uploadTask;
-      return taskSnapshot.ref.getDownloadURL();
-    } on firebase_storage.FirebaseException catch (e) {
-      if (e.code == 'permission-denied') {
-        print(
-            'O usuário não tem permissão para fazer upload para esta referência.');
-      }
-      return null;
-    }
-  }
-
   void _showImageSourceActionSheet(
       BuildContext context, Function(bool photoFromGallery) showImagePicker) {
     const cameraText = Text('Câmera');
     const galleryText = Text('Galeria');
-    if (Platform.isIOS) {
+    if (kIsWeb) {
+      showImagePicker(true);
+    } else if (!kIsWeb && Platform.isIOS) {
       showCupertinoModalPopup(
         context: context,
         builder: (context) => CupertinoActionSheet(
@@ -1280,6 +1269,8 @@ class MyDataForm extends HookConsumerWidget {
           ],
         ),
       );
+      // } else if (kIsWeb) {
+      //   _startFilePicker();
     } else {
       showModalBottomSheet(
         context: context,
@@ -1371,26 +1362,137 @@ class MyDataFormTextField<T extends ValueObject> extends HookWidget {
   }
 }
 
-Future<File?> cropImage(File imageFile) async => await ImageCropper.cropImage(
-      sourcePath: imageFile.path,
-      aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
-      aspectRatioPresets: [CropAspectRatioPreset.square],
-      compressQuality: 70,
-      compressFormat: ImageCompressFormat.jpg,
-      androidUiSettings: androidUiSettingsLocked(),
-      iosUiSettings: iosUiSettingsLocked(),
-      cropStyle: CropStyle.circle,
-    );
+class PhotoEditor extends StatefulWidget {
+  final Uint8List photoImage;
+  final Future<void> Function(XFile photoFile) uploadImage;
 
-IOSUiSettings iosUiSettingsLocked() => const IOSUiSettings(
-      rotateClockwiseButtonHidden: false,
-      rotateButtonsHidden: false,
-    );
+  const PhotoEditor(
+      {Key? key, required this.photoImage, required this.uploadImage})
+      : super(key: key);
 
-AndroidUiSettings androidUiSettingsLocked() => const AndroidUiSettings(
-      toolbarTitle: 'Ajustar a Foto',
-      toolbarColor:
-          Colors.red, //TODO: Ajustar cores para o tema que for definido
-      toolbarWidgetColor: Colors.white,
-      hideBottomControls: false,
+  @override
+  State<PhotoEditor> createState() => _PhotoEditorState();
+
+  static void show(BuildContext context, XFile photoFile,
+      Future<void> Function(XFile photoFile) uploadPhoto) async {
+    final photoImage = await photoFile.readAsBytes();
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => PhotoEditor(
+          photoImage: photoImage,
+          uploadImage: uploadPhoto,
+        ),
+      ),
     );
+  }
+}
+
+class _PhotoEditorState extends State<PhotoEditor> {
+  final GlobalKey<ExtendedImageEditorState> editorKey =
+      GlobalKey<ExtendedImageEditorState>();
+  bool _cropping = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Enquadre somente o seu rosto'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.done),
+              onPressed: () async {
+                if (kIsWeb) {
+                  await showDialog(
+                    context: context,
+                    builder: (_) => AlertDialog(
+                      title: const Text('Atenção!'),
+                      content: const Text(
+                          'Ao clicar no botão Continuar, vamos iniciar o processamento da sua foto e a tela do seu dispositivo parecerá que travou. Em média este processamento poderá demorar até 5 minutos, mas pode ser que demore mais ou menos, porque ele depende do tamanho do arquivo da sua foto.'),
+                      actions: [
+                        TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('Continuar')),
+                      ],
+                    ),
+                  );
+                }
+                Navigator.of(context).pop();
+                cropImage().then((croppedFile) => croppedFile != null
+                    ? widget.uploadImage(croppedFile)
+                    : null);
+              },
+            ),
+          ],
+        ),
+        body: ExtendedImage.memory(
+          widget.photoImage,
+          fit: BoxFit.contain,
+          mode: ExtendedImageMode.editor,
+          enableLoadState: true,
+          extendedImageEditorKey: editorKey,
+          cacheRawData: true,
+          initEditorConfigHandler: (ExtendedImageState? state) {
+            return EditorConfig(
+                maxScale: 3.0,
+                cropRectPadding: const EdgeInsets.all(20.0),
+                hitTestSize: 20.0,
+                initCropRectType: InitCropRectType.imageRect,
+                cropAspectRatio: CropAspectRatios.ratio1_1,
+                editActionDetailsIsChanged: (EditActionDetails? details) {
+                  //print(details?.totalScale);
+                });
+          },
+        ),
+        bottomNavigationBar: BottomAppBar(
+          color: Colors.blue,
+          child: IconTheme(
+            data: IconThemeData(
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
+            child: Row(children: [
+              IconButton(
+                  tooltip: 'Inverter a imagem',
+                  icon: const Icon(Icons.flip),
+                  onPressed: () => editorKey.currentState?.flip()),
+              IconButton(
+                  tooltip: 'Girar a imagem para a esquerda',
+                  icon: const Icon(Icons.rotate_left),
+                  onPressed: () =>
+                      editorKey.currentState?.rotate(right: false)),
+              IconButton(
+                  tooltip: 'Girar a imagem para a direita',
+                  icon: const Icon(Icons.rotate_right),
+                  onPressed: () {
+                    editorKey.currentState?.rotate(right: true);
+                  }),
+              IconButton(
+                  tooltip: 'Descartar alterações e recomeçar',
+                  icon: const Icon(Icons.restore),
+                  onPressed: () => editorKey.currentState?.reset()),
+            ]),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<XFile?> cropImage() async {
+    if (_cropping) {
+      return null;
+    }
+    final Uint8List fileData = Uint8List.fromList(kIsWeb
+        ? (await cropImageDataWithDartLibrary(state: editorKey.currentState!))!
+        : (await cropImageDataWithNativeLibrary(
+            state: editorKey.currentState!))!);
+    // final String? fileFath =
+    //     await ImageSaver.save('extended_image_cropped_image.jpg', fileData);
+
+    // showToast('save image : $fileFath');
+    _cropping = false;
+
+    return XFile.fromData(fileData);
+  }
+}
