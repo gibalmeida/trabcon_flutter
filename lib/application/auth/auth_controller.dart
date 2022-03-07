@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:trabcon_flutter/domain/auth/firebase_auth_repository.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 final authControllerProvider = StateNotifierProvider<AuthController, User?>(
   (ref) => AuthController(ref.read)..appStarted(),
@@ -37,3 +38,20 @@ class AuthController extends StateNotifier<User?> {
     await _read(authRepositoryProvider).signOut();
   }
 }
+
+final photoUrlProvider = FutureProvider<String>((ref) async {
+  final user = ref.watch(authControllerProvider);
+  if (user == null) {
+    return '';
+  }
+  try {
+    return await firebase_storage.FirebaseStorage.instance
+        .ref('users/${user.uid}/images/profile_photo.jpg')
+        .getDownloadURL();
+  } on firebase_storage.FirebaseException catch (e) {
+    if (e.code == 'object-not-found') {
+      return '';
+    }
+  }
+  return '';
+});
