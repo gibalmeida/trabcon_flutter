@@ -41,45 +41,46 @@ class Candidato with _$Candidato {
     required TwitterUrl twitterUrl,
     required LinkedInUrl linkedInUrl,
     required GitHubUrl gitHubUrl,
+    required NivelDeFormacaoEducacional nivelDeFormacaoEducacional,
+    required PretensaoSalarial pretensaoSalarial,
     String? photoUrl,
   }) = _Data;
 
   factory Candidato.empty() => _Data(
-        id: UniqueId(),
-        nomeCompleto: NomeCompleto.empty(),
-        dataDeNascimento: DataDeNascimento.empty(),
-        genero: Genero.empty(),
-        profissao: Profissao.empty(),
-        endereco: Endereco.empty(),
-        bairro: Bairro.empty(),
-        cidade: Cidade.empty(),
-        uf: UnidadeFederativaDoBrasil.empty(),
-        cep: Cep.empty(),
-        telefonePrincipal: TelefonePrincipal.empty(),
-        telefoneAlternativo: TelefoneAlternativo.empty(),
-        categoriasCnh: CategoriasCnh.empty(),
-        veiculoAutomotorProprio: VeiculoAutomotorProprio.empty(),
-        estadoCivil: EstadoCivil.empty(),
-        numeroDeFilhos: NumeroDeFilhos.empty(),
-        conjuge: Conjuge.empty(),
-        portadorDeNecessidadesEspeciais:
-            PortadorDeNecessidadesEspeciais.empty(),
-        necessidadesEspeciais: NecessidadesEspeciais.empty(),
-        temParentesNaEmpresa: TemParentesNaEmpresa.empty(),
-        nomeDoParente: NomeDoParente.empty(),
-        tipoDeParentesco: TipoDeParentesco.empty(),
-        temConhecidosNaEmpresa: TemConhecidosNaEmpresa.empty(),
-        nomesDasPessoasConhecidas: NomesDasPessoasConhecidas.empty(),
-        autoDescricaoDaPersonalidade: AutoDescricaoDaPersonalidade.empty(),
-        motivacaoParaTrabalharNaEmpresa:
-            MotivacaoParaTrabalharNaEmpresa.empty(),
-        outrasInformacoesPessoais: OutrasInformacoesPessoais.empty(),
-        facebookUrl: FacebookUrl.empty(),
-        instagramUrl: InstagramUrl.empty(),
-        twitterUrl: TwitterUrl.empty(),
-        linkedInUrl: LinkedInUrl.empty(),
-        gitHubUrl: GitHubUrl.empty(),
-      );
+      id: UniqueId(),
+      nomeCompleto: NomeCompleto.empty(),
+      dataDeNascimento: DataDeNascimento.empty(),
+      genero: Genero.empty(),
+      profissao: Profissao.empty(),
+      endereco: Endereco.empty(),
+      bairro: Bairro.empty(),
+      cidade: Cidade.empty(),
+      uf: UnidadeFederativaDoBrasil.empty(),
+      cep: Cep.empty(),
+      telefonePrincipal: TelefonePrincipal.empty(),
+      telefoneAlternativo: TelefoneAlternativo.empty(),
+      categoriasCnh: CategoriasCnh.empty(),
+      veiculoAutomotorProprio: VeiculoAutomotorProprio.empty(),
+      estadoCivil: EstadoCivil.empty(),
+      numeroDeFilhos: NumeroDeFilhos.empty(),
+      conjuge: Conjuge.empty(),
+      portadorDeNecessidadesEspeciais: PortadorDeNecessidadesEspeciais.empty(),
+      necessidadesEspeciais: NecessidadesEspeciais.empty(),
+      temParentesNaEmpresa: TemParentesNaEmpresa.empty(),
+      nomeDoParente: NomeDoParente.empty(),
+      tipoDeParentesco: TipoDeParentesco.empty(),
+      temConhecidosNaEmpresa: TemConhecidosNaEmpresa.empty(),
+      nomesDasPessoasConhecidas: NomesDasPessoasConhecidas.empty(),
+      autoDescricaoDaPersonalidade: AutoDescricaoDaPersonalidade.empty(),
+      motivacaoParaTrabalharNaEmpresa: MotivacaoParaTrabalharNaEmpresa.empty(),
+      outrasInformacoesPessoais: OutrasInformacoesPessoais.empty(),
+      facebookUrl: FacebookUrl.empty(),
+      instagramUrl: InstagramUrl.empty(),
+      twitterUrl: TwitterUrl.empty(),
+      linkedInUrl: LinkedInUrl.empty(),
+      gitHubUrl: GitHubUrl.empty(),
+      nivelDeFormacaoEducacional: NivelDeFormacaoEducacional.empty(),
+      pretensaoSalarial: PretensaoSalarial.empty());
 
   bool get conjugeIsOptional =>
       estadoCivil.getOrNull() != EstadoCivilEnum.casado;
@@ -268,6 +269,8 @@ class Candidato with _$Candidato {
         instagramUrl.isValid() &&
         twitterUrl.isValid() &&
         linkedInUrl.isValid() &&
-        gitHubUrl.isValid();
+        gitHubUrl.isValid() &&
+        nivelDeFormacaoEducacional.isValid() &&
+        pretensaoSalarial.isValid();
   }
 }

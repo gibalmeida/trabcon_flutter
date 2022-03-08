@@ -51,6 +51,8 @@ class _$CandidatoTearOff {
       required TwitterUrl twitterUrl,
       required LinkedInUrl linkedInUrl,
       required GitHubUrl gitHubUrl,
+      required NivelDeFormacaoEducacional nivelDeFormacaoEducacional,
+      required PretensaoSalarial pretensaoSalarial,
       String? photoUrl}) {
     return _Data(
       id: id,
@@ -85,6 +87,8 @@ class _$CandidatoTearOff {
       twitterUrl: twitterUrl,
       linkedInUrl: linkedInUrl,
       gitHubUrl: gitHubUrl,
+      nivelDeFormacaoEducacional: nivelDeFormacaoEducacional,
+      pretensaoSalarial: pretensaoSalarial,
       photoUrl: photoUrl,
     );
   }
@@ -137,6 +141,9 @@ mixin _$Candidato {
   TwitterUrl get twitterUrl => throw _privateConstructorUsedError;
   LinkedInUrl get linkedInUrl => throw _privateConstructorUsedError;
   GitHubUrl get gitHubUrl => throw _privateConstructorUsedError;
+  NivelDeFormacaoEducacional get nivelDeFormacaoEducacional =>
+      throw _privateConstructorUsedError;
+  PretensaoSalarial get pretensaoSalarial => throw _privateConstructorUsedError;
   String? get photoUrl => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -181,6 +188,8 @@ abstract class $CandidatoCopyWith<$Res> {
       TwitterUrl twitterUrl,
       LinkedInUrl linkedInUrl,
       GitHubUrl gitHubUrl,
+      NivelDeFormacaoEducacional nivelDeFormacaoEducacional,
+      PretensaoSalarial pretensaoSalarial,
       String? photoUrl});
 }
 
@@ -226,6 +235,8 @@ class _$CandidatoCopyWithImpl<$Res> implements $CandidatoCopyWith<$Res> {
     Object? twitterUrl = freezed,
     Object? linkedInUrl = freezed,
     Object? gitHubUrl = freezed,
+    Object? nivelDeFormacaoEducacional = freezed,
+    Object? pretensaoSalarial = freezed,
     Object? photoUrl = freezed,
   }) {
     return _then(_value.copyWith(
@@ -359,6 +370,14 @@ class _$CandidatoCopyWithImpl<$Res> implements $CandidatoCopyWith<$Res> {
           ? _value.gitHubUrl
           : gitHubUrl // ignore: cast_nullable_to_non_nullable
               as GitHubUrl,
+      nivelDeFormacaoEducacional: nivelDeFormacaoEducacional == freezed
+          ? _value.nivelDeFormacaoEducacional
+          : nivelDeFormacaoEducacional // ignore: cast_nullable_to_non_nullable
+              as NivelDeFormacaoEducacional,
+      pretensaoSalarial: pretensaoSalarial == freezed
+          ? _value.pretensaoSalarial
+          : pretensaoSalarial // ignore: cast_nullable_to_non_nullable
+              as PretensaoSalarial,
       photoUrl: photoUrl == freezed
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
@@ -405,6 +424,8 @@ abstract class _$DataCopyWith<$Res> implements $CandidatoCopyWith<$Res> {
       TwitterUrl twitterUrl,
       LinkedInUrl linkedInUrl,
       GitHubUrl gitHubUrl,
+      NivelDeFormacaoEducacional nivelDeFormacaoEducacional,
+      PretensaoSalarial pretensaoSalarial,
       String? photoUrl});
 }
 
@@ -451,6 +472,8 @@ class __$DataCopyWithImpl<$Res> extends _$CandidatoCopyWithImpl<$Res>
     Object? twitterUrl = freezed,
     Object? linkedInUrl = freezed,
     Object? gitHubUrl = freezed,
+    Object? nivelDeFormacaoEducacional = freezed,
+    Object? pretensaoSalarial = freezed,
     Object? photoUrl = freezed,
   }) {
     return _then(_Data(
@@ -584,6 +607,14 @@ class __$DataCopyWithImpl<$Res> extends _$CandidatoCopyWithImpl<$Res>
           ? _value.gitHubUrl
           : gitHubUrl // ignore: cast_nullable_to_non_nullable
               as GitHubUrl,
+      nivelDeFormacaoEducacional: nivelDeFormacaoEducacional == freezed
+          ? _value.nivelDeFormacaoEducacional
+          : nivelDeFormacaoEducacional // ignore: cast_nullable_to_non_nullable
+              as NivelDeFormacaoEducacional,
+      pretensaoSalarial: pretensaoSalarial == freezed
+          ? _value.pretensaoSalarial
+          : pretensaoSalarial // ignore: cast_nullable_to_non_nullable
+              as PretensaoSalarial,
       photoUrl: photoUrl == freezed
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
@@ -628,6 +659,8 @@ class _$_Data extends _Data {
       required this.twitterUrl,
       required this.linkedInUrl,
       required this.gitHubUrl,
+      required this.nivelDeFormacaoEducacional,
+      required this.pretensaoSalarial,
       this.photoUrl})
       : super._();
 
@@ -696,11 +729,15 @@ class _$_Data extends _Data {
   @override
   final GitHubUrl gitHubUrl;
   @override
+  final NivelDeFormacaoEducacional nivelDeFormacaoEducacional;
+  @override
+  final PretensaoSalarial pretensaoSalarial;
+  @override
   final String? photoUrl;
 
   @override
   String toString() {
-    return 'Candidato(id: $id, nomeCompleto: $nomeCompleto, dataDeNascimento: $dataDeNascimento, genero: $genero, profissao: $profissao, endereco: $endereco, bairro: $bairro, cidade: $cidade, uf: $uf, cep: $cep, telefonePrincipal: $telefonePrincipal, telefoneAlternativo: $telefoneAlternativo, categoriasCnh: $categoriasCnh, veiculoAutomotorProprio: $veiculoAutomotorProprio, estadoCivil: $estadoCivil, numeroDeFilhos: $numeroDeFilhos, conjuge: $conjuge, portadorDeNecessidadesEspeciais: $portadorDeNecessidadesEspeciais, necessidadesEspeciais: $necessidadesEspeciais, temParentesNaEmpresa: $temParentesNaEmpresa, nomeDoParente: $nomeDoParente, tipoDeParentesco: $tipoDeParentesco, temConhecidosNaEmpresa: $temConhecidosNaEmpresa, nomesDasPessoasConhecidas: $nomesDasPessoasConhecidas, autoDescricaoDaPersonalidade: $autoDescricaoDaPersonalidade, motivacaoParaTrabalharNaEmpresa: $motivacaoParaTrabalharNaEmpresa, outrasInformacoesPessoais: $outrasInformacoesPessoais, facebookUrl: $facebookUrl, instagramUrl: $instagramUrl, twitterUrl: $twitterUrl, linkedInUrl: $linkedInUrl, gitHubUrl: $gitHubUrl, photoUrl: $photoUrl)';
+    return 'Candidato(id: $id, nomeCompleto: $nomeCompleto, dataDeNascimento: $dataDeNascimento, genero: $genero, profissao: $profissao, endereco: $endereco, bairro: $bairro, cidade: $cidade, uf: $uf, cep: $cep, telefonePrincipal: $telefonePrincipal, telefoneAlternativo: $telefoneAlternativo, categoriasCnh: $categoriasCnh, veiculoAutomotorProprio: $veiculoAutomotorProprio, estadoCivil: $estadoCivil, numeroDeFilhos: $numeroDeFilhos, conjuge: $conjuge, portadorDeNecessidadesEspeciais: $portadorDeNecessidadesEspeciais, necessidadesEspeciais: $necessidadesEspeciais, temParentesNaEmpresa: $temParentesNaEmpresa, nomeDoParente: $nomeDoParente, tipoDeParentesco: $tipoDeParentesco, temConhecidosNaEmpresa: $temConhecidosNaEmpresa, nomesDasPessoasConhecidas: $nomesDasPessoasConhecidas, autoDescricaoDaPersonalidade: $autoDescricaoDaPersonalidade, motivacaoParaTrabalharNaEmpresa: $motivacaoParaTrabalharNaEmpresa, outrasInformacoesPessoais: $outrasInformacoesPessoais, facebookUrl: $facebookUrl, instagramUrl: $instagramUrl, twitterUrl: $twitterUrl, linkedInUrl: $linkedInUrl, gitHubUrl: $gitHubUrl, nivelDeFormacaoEducacional: $nivelDeFormacaoEducacional, pretensaoSalarial: $pretensaoSalarial, photoUrl: $photoUrl)';
   }
 
   @override
@@ -765,6 +802,10 @@ class _$_Data extends _Data {
             const DeepCollectionEquality()
                 .equals(other.linkedInUrl, linkedInUrl) &&
             const DeepCollectionEquality().equals(other.gitHubUrl, gitHubUrl) &&
+            const DeepCollectionEquality().equals(
+                other.nivelDeFormacaoEducacional, nivelDeFormacaoEducacional) &&
+            const DeepCollectionEquality()
+                .equals(other.pretensaoSalarial, pretensaoSalarial) &&
             const DeepCollectionEquality().equals(other.photoUrl, photoUrl));
   }
 
@@ -803,6 +844,8 @@ class _$_Data extends _Data {
         const DeepCollectionEquality().hash(twitterUrl),
         const DeepCollectionEquality().hash(linkedInUrl),
         const DeepCollectionEquality().hash(gitHubUrl),
+        const DeepCollectionEquality().hash(nivelDeFormacaoEducacional),
+        const DeepCollectionEquality().hash(pretensaoSalarial),
         const DeepCollectionEquality().hash(photoUrl)
       ]);
 
@@ -846,6 +889,8 @@ abstract class _Data extends Candidato {
       required TwitterUrl twitterUrl,
       required LinkedInUrl linkedInUrl,
       required GitHubUrl gitHubUrl,
+      required NivelDeFormacaoEducacional nivelDeFormacaoEducacional,
+      required PretensaoSalarial pretensaoSalarial,
       String? photoUrl}) = _$_Data;
   const _Data._() : super._();
 
@@ -913,6 +958,10 @@ abstract class _Data extends Candidato {
   LinkedInUrl get linkedInUrl;
   @override
   GitHubUrl get gitHubUrl;
+  @override
+  NivelDeFormacaoEducacional get nivelDeFormacaoEducacional;
+  @override
+  PretensaoSalarial get pretensaoSalarial;
   @override
   String? get photoUrl;
   @override
