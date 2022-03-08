@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -33,7 +31,7 @@ class Utils {
   }
 
   static Future<XFile?> cropImage(XFile imageFile) async {
-    final croppedFile = await ImageCropper.cropImage(
+    final croppedFile = await ImageCropper().cropImage(
       sourcePath: imageFile.path,
       aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
       aspectRatioPresets: [CropAspectRatioPreset.square],
