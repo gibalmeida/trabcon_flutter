@@ -1,10 +1,6 @@
-import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:trabcon_flutter/application/auth/auth_controller.dart';
@@ -71,7 +67,7 @@ class MyDataController extends StateNotifier<AsyncValue<Candidato>> {
   Future<String?> fetchPhotoUrl() async {
     try {
       return await firebase_storage.FirebaseStorage.instance
-          .ref('candidato_photos/${_user!.uid}')
+          .ref('users/${_user!.uid}/images/profile_photo.jpg')
           .getDownloadURL();
     } on firebase_storage.FirebaseException catch (e) {
       if (e.code == 'object-not-found') {
@@ -84,19 +80,21 @@ class MyDataController extends StateNotifier<AsyncValue<Candidato>> {
   Future<void> uploadPhoto(XFile imageFile) async {
     // final ext = extension(imageFile.path);
     final uid = FirebaseAuth.instance.currentUser!.uid;
-    final fileName = uid; //basename(imageFile.path);
+    const fileName = 'profile_photo.jpg'; //basename(imageFile.path);
 
     try {
       final firebase_storage.UploadTask uploadTask;
       firebase_storage.Reference firebaseStorageRef = firebase_storage
           .FirebaseStorage.instance
           .ref()
-          .child('candidato_photos')
+          .child('users')
+          .child(uid)
+          .child('images')
           .child(fileName);
 
       // if (kIsWeb) {
       uploadTask = firebaseStorageRef.putData(await imageFile.readAsBytes(),
-          firebase_storage.SettableMetadata(contentType: imageFile.mimeType));
+          firebase_storage.SettableMetadata(contentType: 'image/jpeg'));
       // } else {
       //   uploadTask = firebaseStorageRef.putFile(File(imageFile.path));
       // }
@@ -105,7 +103,6 @@ class MyDataController extends StateNotifier<AsyncValue<Candidato>> {
       final photoUrl = await taskSnapshot.ref.getDownloadURL();
       state =
           state.whenData((candidato) => candidato.copyWith(photoUrl: photoUrl));
-      print(state);
     } on firebase_storage.FirebaseException catch (e) {
       if (e.code == 'permission-denied') {
         _read(myDataExceptionProvider.state).state = const CustomException(
